@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { LayoutDashboard, Calendar, User, FileText, Syringe, HeartPulse, Bell, Settings, LogOut, Home } from "lucide-react";
+import { ArcioLogo } from "../../../src/components/ArcioLogo";
 
 export function Sidebar({ collapsed }) {
   const navItems = [
@@ -18,11 +19,8 @@ export function Sidebar({ collapsed }) {
   return (
     <div className={`fixed inset-y-0 left-0 transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'} bg-white border-r border-[#e2e8f0] flex flex-col z-50`}>
       <div className={`p-4 ${collapsed ? 'px-2' : 'p-6'}`}>
-        <div className={`flex items-center gap-3 mb-8 ${collapsed ? 'justify-center' : ''}`}>
-          <div className="size-8 bg-gradient-to-br from-[#006591] to-[#0ea5e9] rounded-lg flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-sm">AC</span>
-          </div>
-          {!collapsed && <span className="font-bold text-xl text-[#171c1f] whitespace-nowrap overflow-hidden">Arcio Patient</span>}
+        <div className={`mb-8 ${collapsed ? 'flex justify-center' : ''}`}>
+          <ArcioLogo size={collapsed ? 'sm' : 'md'} subtitle="Patient Portal" collapsed={collapsed} />
         </div>
 
         <nav className="flex flex-col gap-2">

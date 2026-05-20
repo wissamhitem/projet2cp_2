@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router';
 import { PlusCircle, Building2, UserPlus, Megaphone, LayoutDashboard, Stethoscope, Users, Calendar, Settings, Activity, Home } from 'lucide-react';
 import imgAccountCircle from '../../imports/ArcioDashboardRedesigned/0451c2026263616c0d537799cc29de3ad82d5750.png';
-import imgClinicLogo from '../../imports/ArcioDashboardRedesigned/634c264d1793a35ca2abfaccbe62de1de1d4811e.png';
+import { ArcioLogo } from '../../../src/components/ArcioLogo';
 
 export function Sidebar({ collapsed }) {
   const location = useLocation();
@@ -20,13 +20,8 @@ export function Sidebar({ collapsed }) {
     <div className={`fixed backdrop-blur-[20px] bg-[rgba(241,245,249,0.8)] h-full left-0 top-0 transition-all duration-300 border-r border-[#e2e8f0] ${collapsed ? 'w-20' : 'w-64'}`}>
       <div className="flex flex-col h-full">
         {/* Logo Section */}
-        <div className="p-4 mb-4">
-          <div className="flex items-center gap-3">
-            <img src={imgClinicLogo} alt="Arcio Health" className="size-8 rounded-lg shrink-0" />
-            {!collapsed && (
-              <span className="font-bold text-lg text-[#0f172a] whitespace-nowrap overflow-hidden">Arcio Health</span>
-            )}
-          </div>
+        <div className="p-4 mb-4 flex justify-center mt-2">
+          <ArcioLogo size={collapsed ? 'sm' : 'md'} subtitle="Master Portal" collapsed={collapsed} />
         </div>
 
         {/* Navigation */}

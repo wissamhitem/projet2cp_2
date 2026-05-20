@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import ScrollToTop from '../../../src/components/ScrollToTop';
+import { ArcioLogo } from '../../../src/components/ArcioLogo';
 
 export default function Layout() {
   const location = useLocation();
@@ -47,14 +48,7 @@ export default function Layout() {
         <aside className="h-full bg-white border-r border-[#e2e8f0] flex flex-col">
           {/* Logo */}
           <div className="h-20 flex items-center justify-center px-4 border-b border-[#e2e8f0]">
-            <div className="flex items-center gap-3">
-              <div className="size-10 bg-gradient-to-br from-[#006591] to-[#0ea5e9] rounded-xl flex items-center justify-center shrink-0">
-                <div className="text-white font-bold text-lg">D</div>
-              </div>
-              {!collapsed && (
-                <div className="font-semibold text-[#171c1f] text-lg">Doctor Portal</div>
-              )}
-            </div>
+            <ArcioLogo size={collapsed ? 'sm' : 'md'} subtitle="Doctor Portal" collapsed={collapsed} />
           </div>
 
           {/* Navigation */}

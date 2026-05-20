@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { ArcioLogo } from '../../../src/components/ArcioLogo';
 
 export default function PatientLogin() {
   const navigate = useNavigate();
@@ -65,14 +66,8 @@ export default function PatientLogin() {
           ← Back to portal selection
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: `linear-gradient(135deg, ${accent}, ${accentDark})`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 8px 16px ${accent}40` }}>
-            <svg viewBox="0 0 24 24" fill="none" width="24" height="24"><circle cx="12" cy="8" r="4" stroke="white" strokeWidth="2"/><path d="M4 20c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="white" strokeWidth="2" strokeLinecap="round"/><path d="M12 14v4M10 16h4" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>
-          </div>
-          <div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: '#0f172a', letterSpacing: '-0.3px' }}>Patient Portal</div>
-            <div style={{ fontSize: 13, color: '#64748b', fontWeight: 500 }}>Arcio Clinical</div>
-          </div>
+        <div style={{ marginBottom: 24 }}>
+          <ArcioLogo size="lg" subtitle="Patient Portal" />
         </div>
 
         <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-0.5px', marginBottom: 8, color: '#0f172a' }}>Welcome back</h1>
