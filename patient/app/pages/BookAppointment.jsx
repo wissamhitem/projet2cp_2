@@ -1,23 +1,39 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { CheckCircle2 } from 'lucide-react';
+import { useToast } from '../../../src/components/Toast';
 import BookAppointmentImport from '../../imports/BookAppointment/BookAppointment';
 
 export default function BookAppointment() {
   const navigate = useNavigate();
-  const [showSuccess, setShowSuccess] = useState(false);
+  const { showToast } = useToast();
 
   const handleNavClick = (e) => {
     const text = e.target.textContent?.trim().toLowerCase() || '';
+    const buttonName = e.target.closest('[data-name*="Button"]')?.textContent?.toLowerCase() || '';
     
     // Intercept "Confirm Booking"
-    if (text.includes('confirm booking') || e.target.closest('[data-name*="Button"]')?.textContent?.toLowerCase().includes('confirm booking')) {
+    if (text.includes('confirm booking') || buttonName.includes('confirm booking')) {
       e.preventDefault();
-      setShowSuccess(true);
+      showToast('Booking Confirmed! Your appointment has been successfully scheduled.', 'success');
       setTimeout(() => {
         navigate('/patient/appointments');
-      }, 3000);
+      }, 2000);
       return;
+    }
+
+    // Intercept Previous Step / Next
+    if (text.includes('previous step') || buttonName.includes('previous step')) {
+      e.preventDefault();
+      showToast('Going back to previous step...', 'info');
+      // Just simulate going back or actually navigate(-1)
+      setTimeout(() => navigate(-1), 1000);
+      return;
+    }
+
+    if (text.includes('next:') || text.includes('view urgent care map')) {
+       e.preventDefault();
+       showToast('Proceeding to next step...', 'success');
+       return;
     }
 
     const link = e.target.closest('[data-name*="Link"]');
@@ -34,23 +50,6 @@ export default function BookAppointment() {
 
   return (
     <div className="w-full min-h-screen relative" onClick={handleNavClick}>
-      {showSuccess && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-10 max-w-sm w-full text-center shadow-2xl border border-slate-100 animate-scale-in">
-            <div className="size-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle2 className="size-10 text-green-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Booking Confirmed!</h3>
-            <p className="text-slate-500 mb-8">Your appointment request has been successfully sent to the clinical network.</p>
-            <button 
-              onClick={() => navigate('/patient/appointments')}
-              className="w-full py-3 px-4 bg-gradient-to-r from-[#006591] to-[#0ea5e9] text-white rounded-xl font-bold hover:shadow-lg transition-all"
-            >
-              View My Appointments
-            </button>
-          </div>
-        </div>
-      )}
       <BookAppointmentImport />
     </div>
   );

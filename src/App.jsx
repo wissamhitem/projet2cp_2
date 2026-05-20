@@ -135,6 +135,64 @@ const router = createBrowserRouter([
   },
 ]);
 
+import { ToastProvider, useToast } from './components/Toast';
+import { useEffect } from 'react';
+
+function GlobalClickInterceptor({ children }) {
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const target = e.target.closest('button, [data-name*="Button"]');
+      if (!target) return;
+
+      const text = target.textContent?.trim().toLowerCase() || '';
+
+      // Ignore buttons that already have custom handling or are navigation links
+      if (
+        target.closest('form') || 
+        target.closest('a') || 
+        target.tagName.toLowerCase() === 'a' ||
+        target.getAttribute('type') === 'submit' ||
+        text.includes('confirm booking') ||
+        text.includes('previous step') ||
+        text.includes('next:') ||
+        text.includes('dashboard') ||
+        text.includes('profile')
+      ) {
+        return;
+      }
+
+      // Automatically show toast for "Save", "Update", "Delete", "Apply", "Switch", "Sign Out"
+      if (text.includes('save') || text.includes('update') || text.includes('apply')) {
+        showToast('Changes successfully saved.', 'success');
+      } else if (text.includes('delete') || text.includes('remove')) {
+        showToast('Item successfully removed.', 'success');
+      } else if (text.includes('sign out') || text.includes('logout')) {
+        showToast('Signing out...', 'info');
+      } else if (text.includes('edit')) {
+        showToast('Opening editor...', 'info');
+      } else if (text.includes('error') || text.includes('fail')) {
+        showToast('An unexpected error occurred.', 'error');
+      } else if (text.length > 0 && text.length < 20) {
+        // Generic response for random buttons
+        showToast(`Action "${target.textContent.trim()}" completed successfully.`, 'success');
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [showToast]);
+
+  return <>{children}</>;
+}
+
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ToastProvider>
+      <GlobalClickInterceptor>
+        <RouterProvider router={router} />
+      </GlobalClickInterceptor>
+    </ToastProvider>
+  );
 }

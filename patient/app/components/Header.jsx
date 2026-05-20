@@ -101,6 +101,25 @@ export function Header() {
 
         <div className="h-8 w-px bg-[#e2e8f0] mx-2"></div>
 
+        {/* Dependent Switcher */}
+        <div className="relative group cursor-pointer mr-2 bg-[#f1f5f9] hover:bg-[#e2e8f0] border border-[#cbd5e1] rounded-full px-4 py-1.5 flex items-center gap-2 transition-colors">
+          <div className="size-2 bg-[#0ea5e9] rounded-full animate-pulse"></div>
+          <span className="text-sm font-semibold text-[#0f172a]">Julian Aris</span>
+          <svg className="size-4 text-[#64748b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+          
+          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-[#e2e8f0] py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            <div className="px-4 py-2 text-xs font-bold text-[#64748b] uppercase tracking-wider">Switch Dependent</div>
+            <div className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#0ea5e9] bg-[#f0f9ff] font-semibold cursor-pointer">
+               <div className="size-6 rounded-full bg-[#0ea5e9] text-white flex items-center justify-center text-xs">JA</div> Julian Aris
+            </div>
+            <div className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#475569] hover:bg-[#f8fafc] cursor-pointer transition-colors">
+               <div className="size-6 rounded-full bg-[#cbd5e1] text-white flex items-center justify-center text-xs">JS</div> John Smith
+            </div>
+          </div>
+        </div>
+
         {/* Profile Section with dropdown */}
         <div className="relative" ref={profileRef}>
           <div 

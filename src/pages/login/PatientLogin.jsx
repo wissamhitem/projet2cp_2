@@ -22,17 +22,10 @@ export default function PatientLogin() {
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontFamily: 'Inter, sans-serif',
-      background: 'linear-gradient(-45deg, #f8fafc, #e0f2fe, #bae6fd, #f1f5f9)',
-      backgroundSize: '400% 400%',
-      animation: 'gradientMove 15s ease infinite',
+      background: '#ffffff',
       position: 'relative', overflow: 'hidden'
     }}>
       <style>{`
-        @keyframes gradientMove {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
         @keyframes float1 {
           0% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }
@@ -59,11 +52,10 @@ export default function PatientLogin() {
       {/* Central Glass Card */}
       <div style={{
         position: 'relative', zIndex: 10, width: '100%', maxWidth: '440px',
-        background: 'rgba(255, 255, 255, 0.5)',
-        backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
-        border: '1px solid rgba(255, 255, 255, 0.6)',
+        background: '#ffffff',
+        border: '1px solid #e2e8f0',
         borderRadius: '32px', padding: '48px',
-        boxShadow: '0 24px 48px -12px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.3)',
+        boxShadow: '0 24px 48px -12px rgba(0,0,0,0.05)',
         animation: 'cardAppear 0.7s cubic-bezier(0.16,1,0.3,1) forwards'
       }}>
         
