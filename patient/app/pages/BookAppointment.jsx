@@ -332,18 +332,31 @@ export default function BookAppointment() {
 
         {step < 3 ? (
           <button
-            onClick={() => canProceed() && setStep(step + 1)}
-            disabled={!canProceed()}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#006591] to-[#0ea5e9] shadow-lg shadow-[#006591]/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg"
+            onClick={() => {
+              if (!canProceed()) {
+                if (step === 1) showToast('Please select a service first', 'error');
+                if (step === 2) showToast('Please select a doctor first', 'error');
+                return;
+              }
+              setStep(step + 1);
+            }}
+            className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#006591] to-[#0ea5e9] shadow-lg shadow-[#006591]/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.97] transition-all ${!canProceed() ? 'opacity-50 hover:scale-100 hover:shadow-lg' : ''}`}
           >
             Next Step
             <ArrowRight className="size-4" />
           </button>
         ) : (
           <button
-            onClick={handleConfirm}
-            disabled={!canProceed() || isSubmitting}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-600 to-emerald-500 shadow-lg shadow-green-500/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.97] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            onClick={() => {
+              if (!canProceed()) {
+                if (!selectedDate) showToast('Please select a date first', 'error');
+                else if (!selectedTime) showToast('Please select a time first', 'error');
+                return;
+              }
+              if (!isSubmitting) handleConfirm();
+            }}
+            disabled={isSubmitting}
+            className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-600 to-emerald-500 shadow-lg shadow-green-500/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.97] transition-all disabled:cursor-not-allowed ${!canProceed() && !isSubmitting ? 'opacity-50 hover:scale-100 hover:shadow-lg' : ''}`}
           >
             {isSubmitting ? (
               <>
