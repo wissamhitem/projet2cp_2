@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-import { ArrowRight, Upload, Minus, Heart, ChevronDown, X, Activity, LayoutDashboard, Settings } from 'lucide-react';
+import { ArrowRight, Upload, Minus, Heart, ChevronDown, X, Activity, LayoutDashboard, Settings, Baby } from 'lucide-react';
 
 const specialties = ['Pulmonologie', 'Hämatologie', 'Nephrologie', 'Kardiologie', 'Neurologie'];
 const experts = ['Dr. Miller', 'Dr. Jenkins', 'Dr. Chen', 'Dr. Watson'];
