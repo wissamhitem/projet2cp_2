@@ -37,7 +37,6 @@ export default function Layout() {
     { name: 'Appointments',  path: '/doctor/appointments',  icon: Calendar        },
     { name: 'Patients',      path: '/doctor/patients',      icon: Users           },
     { name: 'Schedule',      path: '/doctor/schedule',      icon: Building2       },
-    { name: 'Analytics',     path: '/doctor/analytics',     icon: BarChart3       },
     { name: 'Settings',      path: '/doctor/settings',      icon: Settings        },
   ];
 

@@ -8,6 +8,7 @@ export function Sidebar({ collapsed }) {
 
   const navItems = [
     { path: '/admin',               label: 'Dashboard',     icon: LayoutDashboard },
+    { path: '/admin/analytics',     label: 'Analytics',     icon: Activity },
     { path: '/admin/services',      label: 'Services',      icon: Activity },
     { path: '/admin/doctors',       label: 'Doctors List',  icon: Stethoscope },
     { path: '/admin/patients',      label: 'Patients',      icon: Users },

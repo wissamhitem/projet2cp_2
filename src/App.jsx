@@ -10,14 +10,14 @@ import {
   AdminAnnouncements, AdminSettings, AdminSchedule, AdminServices 
 } from '../admin/imports';
 import { 
-  AddDepartment, AddDoctor, AddAnnouncement, AddService 
+  AddDepartment, AddDoctor, AddAnnouncement, AddService, Analytics as AdminAnalytics 
 } from '../admin/app/pages';
 
 // Doctor portal
 import DoctorLayout from '../doctor/app/components/Layout';
 import { 
   Dashboard as DoctorDashboard, Appointments as DoctorAppointments, 
-  Patients as DoctorPatients, Analytics as DoctorAnalytics, 
+  Patients as DoctorPatients, 
   Settings as DoctorSettings, Notifications as DoctorNotifications, 
   Schedule as DoctorSchedule, NewAppointment as DoctorNewAppointment, 
   AddPatient as DoctorAddPatient, SwitchShift as DoctorSwitchShift
@@ -94,6 +94,7 @@ const router = createBrowserRouter([
       { path: 'schedule',         Component: wrap(AdminSchedule)      },
       { path: 'services',         Component: wrap(AdminServices)      },
       { path: 'announcements',    Component: wrap(AdminAnnouncements) },
+      { path: 'analytics',        Component: wrap(AdminAnalytics)     },
       { path: 'settings',         Component: wrap(AdminSettings)      },
       { path: 'add-department',   Component: AddDepartment            },
       { path: 'add-doctor',       Component: AddDoctor                },
@@ -110,7 +111,6 @@ const router = createBrowserRouter([
       { index: true,              Component: DoctorDashboard       },
       { path: 'appointments',     Component: DoctorAppointments    },
       { path: 'patients',         Component: DoctorPatients        },
-      { path: 'analytics',        Component: DoctorAnalytics       },
       { path: 'settings',         Component: DoctorSettings        },
       { path: 'notifications',    Component: DoctorNotifications   },
       { path: 'schedule',         Component: DoctorSchedule        },

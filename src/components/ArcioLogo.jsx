@@ -10,31 +10,38 @@ export function ArcioLogo({ size = 'md', subtitle = '', collapsed = false }) {
 
   return (
     <div className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''}`}>
-      {/* Microscope Icon in Blue Circle */}
+      {/* Logo Icon */}
       <div
-        className="rounded-full flex items-center justify-center shrink-0 shadow-md"
+        className="rounded-full flex items-center justify-center shrink-0 border-[2.5px] border-[#006591] bg-white shadow-sm"
         style={{
           width: s.icon,
           height: s.icon,
-          background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
         }}
       >
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          stroke="white"
-          strokeWidth="1.8"
+          stroke="#006591"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          style={{ width: s.icon * 0.55, height: s.icon * 0.55 }}
+          style={{ width: s.icon * 0.65, height: s.icon * 0.65 }}
         >
-          {/* Microscope SVG */}
-          <path d="M6 18h8" />
-          <path d="M3 22h18" />
-          <path d="M14 22a7 7 0 1 0 0-14h-1" />
-          <path d="M9 14h2" />
-          <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" />
-          <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" />
+          {/* Nurse figure */}
+          <circle cx="7" cy="8" r="2.5" fill="#006591" stroke="none" />
+          <path d="M4.5 4h5v2.5h-5z" fill="#006591" stroke="none" />
+          {/* Cross on hat */}
+          <path d="M6 5.25h2M7 4.25v2" stroke="white" strokeWidth="0.8" />
+          {/* Nurse body */}
+          <path d="M3 18.5v-1c0-1.5 1.5-2.5 3-2.5h1" />
+          
+          {/* Baby/wrapped figure */}
+          <circle cx="10" cy="14" r="1.5" fill="#006591" stroke="none" />
+          <path d="M8 18.5v-1.5c0-.5.5-1 1-1h2c.5 0 1 .5 1 1v1.5" />
+          
+          {/* Chart with ECG */}
+          <rect x="13" y="4" width="8" height="14.5" rx="1.5" />
+          <path d="M14.5 11.5h1l1-2 1.5 4 1-2h1" strokeWidth="1.2" />
         </svg>
       </div>
 
