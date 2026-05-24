@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ArcioLogo } from '../../../src/components/ArcioLogo';
+import api from '../../../src/services/api';
 
 export default function DoctorLogin() {
   const navigate = useNavigate();
@@ -13,11 +14,18 @@ export default function DoctorLogin() {
   const accent = '#006591';
   const accentDark = '#004a6b';
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => navigate('/doctor'), 1200);
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await api.auth.login({ email, password });
+    navigate('/doctor');
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={{

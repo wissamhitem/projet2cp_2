@@ -1,21 +1,31 @@
 import { useState } from 'react';
 import { Megaphone, ArrowLeft, CheckCircle2, Globe, Users, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import api from '../../../src/services/api';
 
 export default function AddAnnouncement() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [targetAudience, setTargetAudience] = useState('all');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      setTimeout(() => navigate('/admin'), 1500);
-    }, 1200);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await api.announcements.create({
+      content: e.target[0].value,
+      target_audience: targetAudience,
+      is_active: true,
+    });
+    setSuccess(true);
+    setTimeout(() => navigate('/admin'), 1500);
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (success) {
     return (
@@ -78,15 +88,17 @@ export default function AddAnnouncement() {
           <div className="field-animate space-y-2" style={{ animationDelay: '0.25s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Target Audience</label>
             <div className="grid grid-cols-3 gap-3">
-              <button type="button" className="flex flex-col items-center gap-2 p-3 rounded-xl border border-[#006591] bg-[#006591]/5 text-[#006591] hover:bg-[#006591]/10 transition-colors">
+              <button type="button" onClick={() => setTargetAudience('all')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'all' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Globe className="size-5" />
                 <span className="text-[10px] font-bold">Public</span>
               </button>
-              <button type="button" className="flex flex-col items-center gap-2 p-3 rounded-xl border border-[#e2e8f0] hover:border-[#006591] transition-colors text-[#64748b] hover:text-[#006591]">
+
+              <button type="button" onClick={() => setTargetAudience('guardian')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'guardian' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Users className="size-5" />
                 <span className="text-[10px] font-bold">Patients</span>
               </button>
-              <button type="button" className="flex flex-col items-center gap-2 p-3 rounded-xl border border-[#e2e8f0] hover:border-[#006591] transition-colors text-[#64748b] hover:text-[#006591]">
+
+              <button type="button" onClick={() => setTargetAudience('doctor')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'doctor' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Lock className="size-5" />
                 <span className="text-[10px] font-bold">Staff Only</span>
               </button>

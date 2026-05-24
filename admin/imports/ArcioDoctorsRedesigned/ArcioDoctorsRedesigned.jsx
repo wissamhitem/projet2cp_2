@@ -1600,7 +1600,7 @@ function ContentCanvas() {
   return (
     <div className="max-w-[1280px] relative shrink-0 w-full z-[1]" data-name="Content Canvas">
       <div className="content-stretch flex flex-col gap-[48px] items-start max-w-[inherit] p-[32px] relative size-full">
-        <SectionPageHeader />
+        
         <BentoGridDoctors />
         <PerformanceSnapshotSectionAsymmetricEditorialLayout />
       </div>

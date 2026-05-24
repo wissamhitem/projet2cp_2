@@ -7,6 +7,10 @@ import imgRecent1 from "./4a9b4c206df7ebf8dea76119a40c294441ff717e.png";
 import imgRecent2 from "./64fe92f18b33b24aa59222d390c2d79ef0f2442c.png";
 import imgClinicBrand from "./ea745e779065b17d2ed3d06dd8c62e5f41bd2c94.png";
 import imgUserAvatar from "./f5cd50f4b4d9777c634054a0225ac1c867868ff5.png";
+import { useState, useEffect } from 'react';
+import api from '../../../src/services/api';
+
+let patientsData = [];
 
 function Container1() {
   return (
@@ -204,7 +208,7 @@ function Heading2() {
   return (
     <div className="content-stretch flex flex-col items-start pb-[12px] relative shrink-0 w-full" data-name="Heading 3">
       <div className="flex flex-col font-['Manrope:Bold',sans-serif] font-bold justify-center leading-[0] relative shrink-0 text-[30px] text-white w-full">
-        <p className="leading-[36px]">1,482</p>
+        <p className="leading-[36px]">{patientsData.length}</p>
       </div>
     </div>
   );
@@ -928,9 +932,32 @@ function PatientItem2() {
 function Container25() {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-name="Container">
-      <PatientItem />
-      <PatientItem1 />
-      <PatientItem2 />
+      {patientsData.length === 0 ? (
+        <div className="text-[#64748b] text-sm p-4">Aucun patient trouvé.</div>
+      ) : (
+        patientsData.map(patient => (
+          <div key={patient.id} className="backdrop-blur-[8px] bg-[rgba(241,245,249,0.7)] relative rounded-[16px] shrink-0 w-full">
+            <div className="flex flex-row items-center size-full">
+              <div className="content-stretch flex items-center justify-between p-[21px] relative size-full">
+                <div className="flex gap-[20px] items-center">
+                  <div className="size-[56px] rounded-[16px] bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white font-bold text-lg shadow-[0px_0px_0px_4px_#f0f9ff]">
+                    {patient.patient_first_name?.[0]}{patient.patient_last_name?.[0]}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[#171c1f] text-[18px]">{patient.patient_first_name} {patient.patient_last_name}</p>
+                    <p className="text-[#40484e] text-[14px]">ID: #{patient.id} • {patient.gender}</p>
+                  </div>
+                </div>
+                <div className="flex gap-[8px] items-center">
+                  <span className="bg-[#e0f2fe] text-[#0369a1] text-[10px] font-bold px-[12px] py-[4px] rounded-full uppercase">
+                    {patient.patient_date_of_birth}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }
@@ -1767,6 +1794,17 @@ function AsideSidebarWrapper() {
 }
 
 export default function ArcioPatientsRedesigned() {
+  const [, setRefresh] = useState(0);
+
+  useEffect(() => {
+    api.patients.list()
+      .then(data => {
+        patientsData = Array.isArray(data) ? data : [];
+        setRefresh(r => r + 1);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="bg-[#f1f5f9] content-stretch flex flex-col items-start relative size-full min-h-screen" data-name="Arcio Patients (Redesigned)">
       <MainContentArea />

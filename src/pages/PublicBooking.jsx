@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useToast } from '../components/Toast';
 import { 
@@ -6,24 +6,7 @@ import {
   Stethoscope, UserRound, CalendarDays, Clock,
   Heart, Brain, Baby, Eye, Bone, Activity
 } from 'lucide-react';
-
-const services = [
-  { id: 1, name: 'General Medicine', icon: Activity, desc: 'Routine check-ups and consultations', color: '#0ea5e9' },
-  { id: 2, name: 'Cardiology', icon: Heart, desc: 'Heart health and cardiovascular care', color: '#ef4444' },
-  { id: 3, name: 'Neurology', icon: Brain, desc: 'Brain and nervous system disorders', color: '#8b5cf6' },
-  { id: 4, name: 'Pediatrics', icon: Baby, desc: 'Children healthcare and immunizations', color: '#f59e0b' },
-  { id: 5, name: 'Ophthalmology', icon: Eye, desc: 'Eye care and vision correction', color: '#06b6d4' },
-  { id: 6, name: 'Orthopedics', icon: Bone, desc: 'Bone, joint, and muscle treatment', color: '#10b981' },
-];
-
-const doctors = [
-  { id: 1, name: 'Dr. Sarah Jenkins', specialty: 'General Medicine', rating: 4.9, patients: 1200, avatar: 'SJ', available: true },
-  { id: 2, name: 'Dr. Michael Chen', specialty: 'General Medicine', rating: 4.8, patients: 980, avatar: 'MC', available: true },
-  { id: 3, name: 'Dr. Emily Watson', specialty: 'Cardiology', rating: 4.9, patients: 1450, avatar: 'EW', available: true },
-  { id: 4, name: 'Dr. Robert Kim', specialty: 'Neurology', rating: 4.7, patients: 860, avatar: 'RK', available: false },
-  { id: 5, name: 'Dr. Lisa Park', specialty: 'Pediatrics', rating: 4.9, patients: 1100, avatar: 'LP', available: true },
-  { id: 6, name: 'Dr. James Miller', specialty: 'Orthopedics', rating: 4.8, patients: 920, avatar: 'JM', available: true },
-];
+import api from '../services/api';
 
 const timeSlots = [
   '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', 
@@ -41,6 +24,13 @@ export default function PublicBooking() {
   const [selectedTime, setSelectedTime] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [servicesList, setServicesList] = useState([]);
+  const [doctorsList, setDoctorsList] = useState([]);
+
+  useEffect(() => {
+  api.services.listPublic().then(data => setServicesList(data));
+  api.doctors.listPublic().then(data => setDoctorsList(data));
+  }, []);
 
   const steps = [
     { num: 1, label: 'Choose Service', icon: Stethoscope },
@@ -55,15 +45,28 @@ export default function PublicBooking() {
     return false;
   };
 
-  const handleConfirm = () => {
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsConfirmed(true);
-      showToast('Appointment booked successfully!', 'success');
-      setTimeout(() => navigate('/'), 2500);
-    }, 1500);
-  };
+  const handleConfirm = async () => {
+  setIsSubmitting(true);
+  try {
+    const doctorName = selectedDoctor?.full_name?.replace('Dr. ', '').trim() 
+    || `${selectedDoctor?.first_name || ''} ${selectedDoctor?.last_name || ''}`.trim();
+
+    await api.appointments.create({
+      doctor_name: doctorName,
+      appointment_date: selectedDate,
+      guest_first_name: 'Guest',
+      guest_last_name: 'Patient',
+      guest_phone: '0000000',
+    });
+    setIsConfirmed(true);
+    showToast('Appointment booked successfully!', 'success');
+    setTimeout(() => navigate('/'), 2500);
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   // Generate next 14 days for the date picker
   const dates = Array.from({ length: 14 }, (_, i) => {
@@ -73,8 +76,8 @@ export default function PublicBooking() {
   });
 
   const filteredDoctors = selectedService
-    ? doctors.filter(d => d.specialty === selectedService.name || selectedService.name === 'General Medicine')
-    : doctors;
+    ? doctorsList.filter(d => d.service === selectedService.name)
+    : doctorsList;
 
   if (isConfirmed) {
     return (
@@ -177,7 +180,7 @@ export default function PublicBooking() {
             <h2 className="text-xl font-bold text-[#0f172a] mb-1">What do you need help with?</h2>
             <p className="text-[#64748b] text-sm mb-6">Select a medical service for your appointment.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {services.map((svc) => (
+              {servicesList.map((svc) => (
                 <button
                   key={svc.id}
                   onClick={() => setSelectedService(svc)}
@@ -188,11 +191,8 @@ export default function PublicBooking() {
                   }`}
                 >
                   <div className="flex items-start gap-4">
-                    <div
-                      className="size-12 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
-                      style={{ backgroundColor: `${svc.color}15` }}
-                    >
-                      <svc.icon className="size-6" style={{ color: svc.color }} />
+                    <div className="size-12 rounded-xl flex items-center justify-center shrink-0 bg-[#0ea5e9]/10">
+                      <Activity className="size-6 text-[#0ea5e9]" />
                     </div>
                     <div>
                       <p className="font-bold text-[#0f172a] mb-1">{svc.name}</p>
@@ -219,10 +219,11 @@ export default function PublicBooking() {
               {filteredDoctors.map((doc) => (
                 <button
                   key={doc.id}
-                  onClick={() => doc.available && setSelectedDoctor(doc)}
-                  disabled={!doc.available}
+                  onClick={() => setSelectedDoctor(doc)}
+                  disabled={false}
+                  
                   className={`text-left p-5 rounded-2xl border-2 transition-all group ${
-                    !doc.available
+                    false
                       ? 'border-[#e2e8f0] bg-[#f8fafc] opacity-50 cursor-not-allowed'
                       : selectedDoctor?.id === doc.id
                       ? 'border-[#0ea5e9] bg-[#f0f9ff] shadow-md'
@@ -231,14 +232,14 @@ export default function PublicBooking() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="size-14 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white font-bold text-lg shrink-0 group-hover:scale-105 transition-transform">
-                      {doc.avatar}
+                      {doc.full_name?.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="font-bold text-[#0f172a]">{doc.name}</p>
-                        {!doc.available && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Unavailable</span>}
+                        <p className="font-bold text-[#0f172a]">{doc.full_name}</p>
+                        {false && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Unavailable</span>}
                       </div>
-                      <p className="text-xs text-[#64748b] mt-0.5">{doc.specialty}</p>
+                      <p className="text-xs text-[#64748b] mt-0.5">{doc.service}</p>
                       <div className="flex items-center gap-3 mt-2">
                         <span className="text-xs font-semibold text-amber-600">★ {doc.rating}</span>
                         <span className="text-xs text-[#94a3b8]">{doc.patients} patients</span>

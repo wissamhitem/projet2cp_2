@@ -1,21 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Activity, ArrowLeft, Check, Sparkles } from 'lucide-react';
+import api from '../../../src/services/api';
 
 export default function AddService() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      setTimeout(() => navigate('/admin'), 1500);
-    }, 1500);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await api.services.create({
+      name: e.target[0].value,
+      description: e.target[2].value,
+    });
+    setSuccess(true);
+    setTimeout(() => navigate('/admin'), 1500);
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex items-center justify-center p-6 relative overflow-hidden">

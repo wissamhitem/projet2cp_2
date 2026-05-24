@@ -1,6 +1,10 @@
 import svgPaths from "./svg-8z7c4867aa";
 import imgAccountCircle from "./0451c2026263616c0d537799cc29de3ad82d5750.png";
 import imgClinicLogo from "./634c264d1793a35ca2abfaccbe62de1de1d4811e.png";
+import { useState, useEffect } from 'react';
+import api from '../../../src/services/api';
+
+let dashboardStats = { total_doctors: 0, total_patients: 0, appointments_today: 0, pending_today: 0 };
 
 function Container2() {
   return (
@@ -231,7 +235,7 @@ function Heading2() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] h-[40px] justify-center leading-[0] not-italic relative shrink-0 text-[#171c1f] text-[28px] w-[43.03px]">
-        <p className="leading-[40px]">23</p>
+        <p className="leading-[40px]">{window.dashboardStats?.total_doctors ?? 0}</p>
       </div>
     </div>
   );
@@ -303,7 +307,7 @@ function Heading3() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] h-[40px] justify-center leading-[0] not-italic relative shrink-0 text-[#171c1f] text-[28px] w-[43.03px]">
-        <p className="leading-[40px]">23</p>
+        <p className="leading-[40px]">{window.dashboardStats?.total_patients ?? 0}</p>
       </div>
     </div>
   );
@@ -375,7 +379,7 @@ function Heading4() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] h-[40px] justify-center leading-[0] not-italic relative shrink-0 text-[36px] text-white w-[43.03px]">
-        <p className="leading-[40px]">23</p>
+        <p className="leading-[40px]">{window.dashboardStats?.appointments_today ?? 0}</p>
       </div>
     </div>
   );
@@ -443,7 +447,7 @@ function Heading5() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 3">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] h-[40px] justify-center leading-[0] not-italic relative shrink-0 text-[#171c1f] text-[28px] w-[43.03px]">
-        <p className="leading-[40px]">23</p>
+        <p className="leading-[40px]">{window.dashboardStats?.pending_today ?? 0}</p>
       </div>
     </div>
   );
@@ -1914,7 +1918,23 @@ function ButtonContextualFabSuppressedOnSubPagesShownHereAsItIsThePrimaryDashboa
   );
 }
 
-export default function ArcioDashboardRedesigned() {
+  export default function ArcioDashboardRedesigned() {
+  const [stats, setStats] = useState({
+    total_doctors: 0,
+    total_patients: 0,
+    appointments_today: 0,
+    pending_today: 0,
+  });
+
+  useEffect(() => {
+  api.analytics.dashboard()
+    .then(data => {
+      window.dashboardStats = data;
+      setStats(data);
+    })
+    .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="bg-[#f1f5f9] content-stretch flex flex-col items-start relative size-full min-h-screen" data-name="Arcio Dashboard (Redesigned)">
       <MainContentArea />

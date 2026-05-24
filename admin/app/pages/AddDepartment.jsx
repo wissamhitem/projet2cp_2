@@ -1,21 +1,29 @@
 import { useState } from 'react';
 import { Building2, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router';
+import api from '../../../src/services/api';
 
 export default function AddDepartment() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-      setTimeout(() => navigate('/admin'), 1500);
-    }, 1200);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await api.departments.create({
+      name: e.target[0].value,
+      description: e.target[1].value,
+    });
+    setSuccess(true);
+    setTimeout(() => navigate('/admin'), 1500);
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (success) {
     return (

@@ -1,4 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import DoctorsList from '../admin/app/pages/DoctorsList';
+import ServicesList from '../admin/app/pages/ServicesList';
+import AnnouncementsList from '../admin/app/pages/AnnouncementsList';
+import { AddSchedule } from '../admin/app/pages';
 
 // Auth & Landing pages
 import { Landing, PatientLogin, DoctorLogin, AdminLogin, PublicBooking } from './pages';
@@ -90,18 +94,19 @@ const router = createBrowserRouter([
     Component: AdminLayout,
     children: [
       { index: true,              Component: wrap(AdminDashboard)     },
-      { path: 'doctors',          Component: wrap(AdminDoctors)       },
+      { path: 'doctors',          Component: DoctorsList              },
       { path: 'patients',         Component: wrap(AdminPatients)      },
       { path: 'appointments',     Component: wrap(AdminAppointments)  },
       { path: 'schedule',         Component: wrap(AdminSchedule)      },
-      { path: 'services',         Component: wrap(AdminServices)      },
-      { path: 'announcements',    Component: wrap(AdminAnnouncements) },
+      { path: 'services',         Component: ServicesList             },
+      { path: 'announcements',    Component: AnnouncementsList        },
       { path: 'analytics',        Component: wrap(AdminAnalytics)     },
       { path: 'settings',         Component: wrap(AdminSettings)      },
       { path: 'add-department',   Component: AddDepartment            },
       { path: 'add-doctor',       Component: AddDoctor                },
       { path: 'add-service',      Component: AddService               },
       { path: 'new-announcement', Component: AddAnnouncement          },
+      { path: 'add-schedule',     Component: AddSchedule              },
     ],
   },
 

@@ -13,6 +13,7 @@ export function Sidebar({ collapsed }) {
     { path: '/admin/doctors',       label: 'Doctors List',  icon: Stethoscope },
     { path: '/admin/patients',      label: 'Patients',      icon: Users },
     { path: '/admin/appointments',  label: 'Appointments',  icon: Calendar },
+    { path: '/admin/schedule',      label: 'Schedule',      icon: Calendar },
     { path: '/admin/announcements', label: 'Announcements', icon: Megaphone },
     { path: '/admin/settings',      label: 'Settings',      icon: Settings },
   ];

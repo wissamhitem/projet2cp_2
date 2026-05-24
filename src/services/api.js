@@ -33,6 +33,9 @@ async function request(endpoint, options = {}) {
     ...options.headers,
   };
 
+  const token = localStorage.getItem('token');
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
   // Remove Content-Type for FormData (browser sets boundary automatically)
   if (options.body instanceof FormData) {
     delete headers['Content-Type'];
@@ -80,45 +83,47 @@ const upload = (endpoint, formData) =>
 const api = {
   // ── Auth ──
   auth: {
-    login:    (credentials) => post('/auth/login/', credentials),
-    logout:   ()            => post('/auth/logout/'),
-    me:       ()            => get('/auth/me/'),
+    login:    (credentials) => post('/login/', credentials),
+    logout:   ()            => post('/logout/'),
+    me:       ()            => get('/my-profile/'),
   },
 
   // ── Patients ──
   patients: {
     list:     ()           => get('/patients/'),
     get:      (id)         => get(`/patients/${id}/`),
-    create:   (data)       => post('/patients/', data),
-    update:   (id, data)   => patch(`/patients/${id}/`, data),
-    delete:   (id)         => del(`/patients/${id}/`),
+    create:   (data)       => post('/patients/create/', data),
+    update:   (id, data)   => put(`/patients/${id}/update/`, data),
+    delete:   (id)         => del(`/patients/${id}/delete/`),
   },
 
   // ── Doctors ──
   doctors: {
+    listPublic: () => get('/doctors/public/'),
     list:     ()           => get('/doctors/'),
     get:      (id)         => get(`/doctors/${id}/`),
-    create:   (data)       => post('/doctors/', data),
-    update:   (id, data)   => patch(`/doctors/${id}/`, data),
-    delete:   (id)         => del(`/doctors/${id}/`),
+    create:   (data)       => post('/doctors/create/', data),
+    update:   (id, data)   => put(`/doctors/${id}/update/`, data),
+    delete:   (id)         => del(`/doctors/${id}/delete/`),
   },
 
   // ── Appointments ──
   appointments: {
     list:     ()           => get('/appointments/'),
     get:      (id)         => get(`/appointments/${id}/`),
-    create:   (data)       => post('/appointments/', data),
-    update:   (id, data)   => patch(`/appointments/${id}/`, data),
-    delete:   (id)         => del(`/appointments/${id}/`),
+    create:   (data)       => post('/appointments/create/', data),
+    update:   (id, data)   => put(`/appointments/${id}/update/`, data),
+    delete:   (id)         => del(`/appointments/${id}/delete/`),
   },
 
   // ── Services ──
   services: {
+    listPublic: () => get('/services/public/'),
     list:     ()           => get('/services/'),
     get:      (id)         => get(`/services/${id}/`),
-    create:   (data)       => post('/services/', data),
-    update:   (id, data)   => patch(`/services/${id}/`, data),
-    delete:   (id)         => del(`/services/${id}/`),
+    create:   (data)       => post('/services/create/', data),
+    update:   (id, data)   => put(`/services/${id}/update/`, data),
+    delete:   (id)         => del(`/services/${id}/delete/`),
   },
 
   // ── Departments ──
@@ -131,18 +136,27 @@ const api = {
   },
 
   // ── Announcements ──
-  announcements: {
+    announcements: {
     list:     ()           => get('/announcements/'),
     get:      (id)         => get(`/announcements/${id}/`),
-    create:   (data)       => post('/announcements/', data),
-    update:   (id, data)   => patch(`/announcements/${id}/`, data),
-    delete:   (id)         => del(`/announcements/${id}/`),
-  },
+    create:   (data)       => post('/announcements/create/', data),
+    update:   (id, data)   => put(`/announcements/${id}/update/`, data),
+    delete:   (id)         => del(`/announcements/${id}/delete/`),
+    },
+
+  // ── Schedules ──
+    schedules: {
+    list:     ()           => get('/schedules/'),
+    get:      (id)         => get(`/schedules/${id}/`),
+    create:   (data)       => post('/schedules/create/', data),
+    update:   (id, data)   => put(`/schedules/${id}/update/`, data),
+    delete:   (id)         => del(`/schedules/${id}/delete/`),
+    },
 
   // ── Analytics ──
   analytics: {
-    dashboard:  ()         => get('/analytics/dashboard/'),
-    reports:    (params)   => get(`/analytics/reports/?${new URLSearchParams(params)}`),
+    dashboard:  ()         => get('/dashboard/'),
+    reports:    (params)   => get(`/dashboard/`),
   },
 
   // ── Documents / Files ──
@@ -159,5 +173,6 @@ const api = {
     markAll:  ()           => post('/notifications/mark-all-read/'),
   },
 };
+
 
 export default api;

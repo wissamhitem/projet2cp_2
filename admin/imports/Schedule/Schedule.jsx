@@ -5,6 +5,10 @@ import imgDrMichaelAris from "./82d90c36d832aaf3762fc070fc92826b9decf0dc.png";
 import imgDrElenaRossi from "./fa04f0c752a1484b6773c7e331f6cdfc51b428e3.png";
 import imgDrLeoGrant from "./84cdf81abe8427655e7c119f17864f42962f6bd4.png";
 import imgDrMayaSingh from "./77adb606432cea03ac38c31c8ca5cf804b2c737f.png";
+import { useState, useEffect } from 'react';
+import api from '../../../src/services/api';
+
+let schedulesData = [];
 
 function Container3() {
   return (
@@ -1732,6 +1736,17 @@ function Container() {
 }
 
 export default function Schedule() {
+  const [, setRefresh] = useState(0);
+
+  useEffect(() => {
+    api.schedules
+      ? api.schedules.list().then(data => {
+          schedulesData = Array.isArray(data) ? data : [];
+          setRefresh(r => r + 1);
+        }).catch(err => console.error(err))
+      : console.warn('api.schedules not defined');
+  }, []);
+
   return (
     <div className="bg-[#f1f5f9] content-stretch flex flex-col items-start relative size-full" data-name="schedule">
       <Container />

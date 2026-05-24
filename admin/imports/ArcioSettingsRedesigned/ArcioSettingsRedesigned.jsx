@@ -1,6 +1,10 @@
 import svgPaths from "./svg-nnlhz6opyo";
 import imgAb6AXuDaJ3DpWfLtb7Iyeg6SrNmSthzVtokV0Qp0MlhXyfll078EVSwezT1CWjfFkevC0TqH42OWoqq9YId8LFqJjtlXv8Jo45UimJa5OKh6XwYmsNmaBz7ZDfxoYpkuh2QIruEkymIFpj6Ttl27MkUcnVjKpwvNwZgh76WyRExfleAhCkIsBo5Y8KgzWxYeJJTq3Tl8Wa20A0LJnQnCxt3BoKrRz1IwhxNumuIhH3JDScN7GebDdhAJtLNr8CyD3Wl7URQwXufZg from "./ff9ee7ed8fdd31d92b06fb137a58c46778c707b1.png";
 import imgProfile from "./e1f3c6a4d972c22173336353463adaa287c4c399.png";
+import { useState, useEffect } from 'react';
+import api from '../../../src/services/api';
+
+let profileData = { full_name: '', email: '', phone: '' };
 
 function Container2() {
   return (
@@ -369,7 +373,7 @@ function Container24() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px overflow-clip relative" data-name="Container">
       <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[16px] w-full">
-        <p className="leading-[24px]">Dr. Julian Arcio</p>
+        <p className="leading-[24px]">{profileData.full_name || 'Dr. Julian Arcio'}</p>
       </div>
     </div>
   );
@@ -427,7 +431,7 @@ function Container28() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px overflow-clip relative" data-name="Container">
       <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[16px] w-full">
-        <p className="leading-[24px]">j.arcio@clinical-sanctuary.com</p>
+        <p className="leading-[24px]">{profileData.email || 'j.arcio@clinical-sanctuary.com'}</p>
       </div>
     </div>
   );
@@ -456,7 +460,7 @@ function Container30() {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px overflow-clip relative" data-name="Container">
       <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[16px] w-full">
-        <p className="leading-[24px]">+1 (555) 012-9843</p>
+        <p className="leading-[24px]">{profileData.phone || '+1 (555) 012-9843'}</p>
       </div>
     </div>
   );
@@ -1877,6 +1881,17 @@ function AsideSidebarNavigation() {
 }
 
 export default function ArcioSettingsRedesigned() {
+  const [, setRefresh] = useState(0);
+
+  useEffect(() => {
+    api.auth.me()
+      .then(data => {
+        profileData = data;
+        setRefresh(r => r + 1);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="bg-[#f1f5f9] content-stretch flex flex-col items-start pl-[256px] relative size-full" data-name="Arcio Settings (Redesigned)">
       <MainContentArea />

@@ -2,6 +2,10 @@ import svgPaths from "./svg-bqhfkgiaql";
 import imgMarcoKSchmidt from "./741b7dcd7e84cb472c84b74abaf138214a52d905.png";
 import imgElenaRodriguez from "./6b8909924b33e00f9a336b50c0b826e06bd66e37.png";
 import imgClinicLogo from "./5e00243b8ebd581355c8cc14a9f007acdc50efbf.png";
+import { useState, useEffect } from 'react';
+import api from '../../../src/services/api';
+
+let appointmentsData = [];
 
 function Container1() {
   return (
@@ -267,7 +271,7 @@ function Heading2() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 4">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[36px] text-white w-full">
-        <p className="leading-[40px]">142</p>
+        <p className="leading-[40px]">{appointmentsData.length}</p>
       </div>
     </div>
   );
@@ -331,7 +335,7 @@ function Heading3() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 4">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[36px] w-full">
-        <p className="leading-[40px]">89</p>
+        <p className="leading-[40px]">{appointmentsData.filter(a => a.appointment_status === 'completed').length}</p>
       </div>
     </div>
   );
@@ -397,7 +401,7 @@ function Heading4() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 4">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[36px] w-full">
-        <p className="leading-[40px]">42</p>
+        <p className="leading-[40px]">{appointmentsData.filter(a => a.appointment_status === 'pending').length}</p>
       </div>
     </div>
   );
@@ -463,7 +467,7 @@ function Heading5() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Heading 4">
       <div className="flex flex-col font-['Manrope:Extra_Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#0f172a] text-[36px] w-full">
-        <p className="leading-[40px]">11</p>
+        <p className="leading-[40px]">{appointmentsData.filter(a => a.appointment_status === 'cancelled').length}</p>
       </div>
     </div>
   );
@@ -1021,11 +1025,44 @@ function Request1() {
 }
 
 function Container33() {
+  const statusColors = {
+    pending: { bg: '#fef3c7', text: '#b45309' },
+    confirmed: { bg: '#e0f2fe', text: '#0369a1' },
+    completed: { bg: '#d1fae5', text: '#047857' },
+    cancelled: { bg: '#fee2e2', text: '#b91c1c' },
+  };
+
   return (
     <div className="relative shrink-0 w-full" data-name="Container">
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col gap-[16px] items-start relative size-full">
-        <Request />
-        <Request1 />
+        {appointmentsData.length === 0 ? (
+          <div className="text-[#64748b] text-sm p-4">Aucun rendez-vous trouvé.</div>
+        ) : (
+          appointmentsData.map(appointment => {
+            const status = appointment.appointment_status || 'pending';
+            const colors = statusColors[status] || statusColors.pending;
+            return (
+              <div key={appointment.id} className="bg-[rgba(255,255,255,0.4)] relative rounded-[16px] shrink-0 w-full">
+                <div className="flex flex-row items-center size-full">
+                  <div className="content-stretch flex items-center justify-between p-[21px] relative size-full">
+                    <div className="flex gap-[16px] items-center">
+                      <div className="size-[48px] rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white font-bold">
+                        {appointment.guest_first_name?.[0]}{appointment.guest_last_name?.[0]}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#0f172a] text-[16px]">{appointment.guest_first_name} {appointment.guest_last_name}</p>
+                        <p className="text-[#64748b] text-[12px]">{appointment.appointment_date} • Queue #{appointment.queue_number}</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-bold px-[12px] py-[4px] rounded-full uppercase" style={{ backgroundColor: colors.bg, color: colors.text }}>
+                      {status}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
@@ -1760,6 +1797,17 @@ function AsideSideNavBarExecutionFromJson() {
 }
 
 export default function ArcioAppointmentsRedesigned() {
+  const [, setRefresh] = useState(0);
+
+  useEffect(() => {
+    api.appointments.list()
+      .then(data => {
+        appointmentsData = Array.isArray(data) ? data : [];
+        setRefresh(r => r + 1);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="bg-[#f1f5f9] content-stretch flex flex-col items-start pl-[256px] relative size-full" data-name="Arcio Appointments (Redesigned)">
       <MainCanvas />
