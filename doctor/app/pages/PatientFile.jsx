@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router';
 import { Search, ArrowLeft, FileText, Syringe, Trash2, Eye, Pencil, ChevronRight, FolderOpen, CheckCircle2 } from 'lucide-react';
 
 const allPatients = [
-  { name: 'Leo Harris', id: 'P-2024-201', age: 67, blood: 'A+', diagnosis: 'Cardiac Arrhythmia', allergies: 'Penicillin', meds: 'Metoprolol 50mg', documents: [{ name: 'Blood Test Results', date: '2024-09-10', type: 'Lab Report' }, { name: 'ECG Report', date: '2024-08-22', type: 'Cardiology' }, { name: 'Discharge Summary', date: '2024-07-15', type: 'Hospital' }], vaccinations: [{ name: 'COVID-19 (Pfizer)', date: '2024-03-15', status: 'Complete' }, { name: 'Influenza', date: '2024-10-01', status: 'Complete' }, { name: 'Hepatitis B', date: '2023-06-20', status: 'Dose 2/3' }] },
-  { name: 'Sarah Jenkins', id: 'P-2024-147', age: 34, blood: 'O+', diagnosis: 'Post-op Recovery', allergies: 'None', meds: 'Ibuprofen 400mg', documents: [{ name: 'Surgery Report', date: '2024-09-01', type: 'Surgical' }, { name: 'Post-op Instructions', date: '2024-09-02', type: 'Hospital' }], vaccinations: [{ name: 'COVID-19 (Moderna)', date: '2024-01-10', status: 'Complete' }, { name: 'Tetanus', date: '2023-11-05', status: 'Complete' }] },
-  { name: 'Robert Chen', id: 'P-2024-189', age: 51, blood: 'B-', diagnosis: 'Pulmonary Embolism', allergies: 'Aspirin', meds: 'Warfarin 5mg', documents: [{ name: 'CT Scan Report', date: '2024-08-15', type: 'Radiology' }, { name: 'Coagulation Panel', date: '2024-09-05', type: 'Lab Report' }], vaccinations: [{ name: 'COVID-19 (Pfizer)', date: '2024-02-20', status: 'Complete' }, { name: 'Pneumococcal', date: '2024-05-12', status: 'Complete' }] },
-  { name: 'Emily Watson', id: 'P-2024-256', age: 28, blood: 'AB+', diagnosis: 'Routine Monitoring', allergies: 'Latex', meds: 'None', documents: [{ name: 'Annual Checkup', date: '2024-10-01', type: 'General' }, { name: 'Allergy Test', date: '2024-06-20', type: 'Lab Report' }], vaccinations: [{ name: 'COVID-19 (J&J)', date: '2024-04-08', status: 'Complete' }, { name: 'HPV', date: '2023-09-15', status: 'Dose 3/3' }] },
-  { name: 'Marcus Lee', id: 'P-2024-298', age: 73, blood: 'O-', diagnosis: 'Respiratory Distress', allergies: 'Sulfa drugs', meds: 'Albuterol inhaler', documents: [{ name: 'Chest X-Ray', date: '2024-09-18', type: 'Radiology' }, { name: 'Pulmonary Function', date: '2024-09-20', type: 'Lab Report' }, { name: 'Oxygen Therapy Plan', date: '2024-09-22', type: 'Treatment' }], vaccinations: [{ name: 'COVID-19 (Pfizer)', date: '2024-01-25', status: 'Complete' }, { name: 'Influenza', date: '2024-09-20', status: 'Complete' }, { name: 'Shingles', date: '2023-07-10', status: 'Complete' }] },
-  { name: 'Alice Turner', id: 'P-2024-301', age: 45, blood: 'A-', diagnosis: 'Lab Results Pending', allergies: 'Codeine', meds: 'Lisinopril 10mg', documents: [{ name: 'Metabolic Panel', date: '2024-10-05', type: 'Lab Report' }, { name: 'Referral Letter', date: '2024-09-30', type: 'General' }], vaccinations: [{ name: 'COVID-19 (Moderna)', date: '2024-03-01', status: 'Complete' }, { name: 'Tdap', date: '2024-02-14', status: 'Complete' }] },
+  { patient_first_name: 'Leo', patient_last_name: 'Harris', id: 1, patient_date_of_birth: '1957-03-15', gender: 'Male', blood_type: 'A+', chronic_condition: 'Cardiac Arrhythmia', allergies: 'Penicillin', height: '175', weight: '82', documents: [{ description: 'Blood Test Results', uploaded_at: '2024-09-10', document_type: 'Lab Report' }, { description: 'ECG Report', uploaded_at: '2024-08-22', document_type: 'Cardiology' }, { description: 'Discharge Summary', uploaded_at: '2024-07-15', document_type: 'Hospital' }], vaccinations: [{ vaccine_name: 'COVID-19 (Pfizer)', date_administered: '2024-03-15', status: 'administered' }, { vaccine_name: 'Influenza', date_administered: '2024-10-01', status: 'administered' }, { vaccine_name: 'Hepatitis B', date_administered: '2023-06-20', status: 'scheduled' }] },
+  { patient_first_name: 'Sarah', patient_last_name: 'Jenkins', id: 2, patient_date_of_birth: '1990-06-24', gender: 'Female', blood_type: 'O+', chronic_condition: 'Post-op Recovery', allergies: 'None', height: '163', weight: '58', documents: [{ description: 'Surgery Report', uploaded_at: '2024-09-01', document_type: 'Surgical' }, { description: 'Post-op Instructions', uploaded_at: '2024-09-02', document_type: 'Hospital' }], vaccinations: [{ vaccine_name: 'COVID-19 (Moderna)', date_administered: '2024-01-10', status: 'administered' }, { vaccine_name: 'Tetanus', date_administered: '2023-11-05', status: 'administered' }] },
+  { patient_first_name: 'Robert', patient_last_name: 'Chen', id: 3, patient_date_of_birth: '1973-11-12', gender: 'Male', blood_type: 'B-', chronic_condition: 'Pulmonary Embolism', allergies: 'Aspirin', height: '180', weight: '90', documents: [{ description: 'CT Scan Report', uploaded_at: '2024-08-15', document_type: 'Radiology' }, { description: 'Coagulation Panel', uploaded_at: '2024-09-05', document_type: 'Lab Report' }], vaccinations: [{ vaccine_name: 'COVID-19 (Pfizer)', date_administered: '2024-02-20', status: 'administered' }, { vaccine_name: 'Pneumococcal', date_administered: '2024-05-12', status: 'administered' }] },
+  { patient_first_name: 'Emily', patient_last_name: 'Watson', id: 4, patient_date_of_birth: '1996-10-01', gender: 'Female', blood_type: 'AB+', chronic_condition: 'Routine Monitoring', allergies: 'Latex', height: '168', weight: '60', documents: [{ description: 'Annual Checkup', uploaded_at: '2024-10-01', document_type: 'General' }, { description: 'Allergy Test', uploaded_at: '2024-06-20', document_type: 'Lab Report' }], vaccinations: [{ vaccine_name: 'COVID-19 (J&J)', date_administered: '2024-04-08', status: 'administered' }, { vaccine_name: 'HPV', date_administered: '2023-09-15', status: 'scheduled' }] },
+  { patient_first_name: 'Marcus', patient_last_name: 'Lee', id: 5, patient_date_of_birth: '1951-09-18', gender: 'Male', blood_type: 'O-', chronic_condition: 'Respiratory Distress', allergies: 'Sulfa drugs', height: '172', weight: '78', documents: [{ description: 'Chest X-Ray', uploaded_at: '2024-09-18', document_type: 'Radiology' }, { description: 'Pulmonary Function', uploaded_at: '2024-09-20', document_type: 'Lab Report' }, { description: 'Oxygen Therapy Plan', uploaded_at: '2024-09-22', document_type: 'Treatment' }], vaccinations: [{ vaccine_name: 'COVID-19 (Pfizer)', date_administered: '2024-01-25', status: 'administered' }, { vaccine_name: 'Influenza', date_administered: '2024-09-20', status: 'administered' }, { vaccine_name: 'Shingles', date_administered: '2023-07-10', status: 'administered' }] },
+  { patient_first_name: 'Alice', patient_last_name: 'Turner', id: 6, patient_date_of_birth: '1979-10-05', gender: 'Female', blood_type: 'A-', chronic_condition: 'Lab Results Pending', allergies: 'Codeine', height: '165', weight: '65', documents: [{ description: 'Metabolic Panel', uploaded_at: '2024-10-05', document_type: 'Lab Report' }, { description: 'Referral Letter', uploaded_at: '2024-09-30', document_type: 'General' }], vaccinations: [{ vaccine_name: 'COVID-19 (Moderna)', date_administered: '2024-03-01', status: 'administered' }, { vaccine_name: 'Tdap', date_administered: '2024-02-14', status: 'administered' }] },
 ];
 
 export default function PatientFile() {
@@ -26,7 +26,7 @@ export default function PatientFile() {
   const [docEditData, setDocEditData] = useState({});
   const [docSaved, setDocSaved] = useState(false);
 
-  const results = search.length > 0 ? patients.filter(p => p.name.toLowerCase().includes(search.toLowerCase())) : [];
+  const results = search.length > 0 ? patients.filter(p => `${p.patient_first_name} ${p.patient_last_name}`.toLowerCase().includes(search.toLowerCase())) : [];
 
   const handleSelect = (p) => { setSelected(p); setSearch(''); setView(null); setEditing(false); setSaved(false); };
 
@@ -36,7 +36,7 @@ export default function PatientFile() {
   };
 
   const startEdit = () => {
-    setEditData({ diagnosis: selected.diagnosis, allergies: selected.allergies, meds: selected.meds, blood: selected.blood });
+    setEditData({ blood_type: selected.blood_type, chronic_condition: selected.chronic_condition, allergies: selected.allergies, height: selected.height, weight: selected.weight });
     setEditing(true); setSaved(false);
   };
 
@@ -57,9 +57,9 @@ export default function PatientFile() {
         </button>
         <div>
           <h1 className="text-2xl font-extrabold text-[#171c1f] tracking-tight">
-            {viewingDoc ? viewingDoc.name : view ? viewTitle[view] : selected ? 'Patient Options' : 'Patient File Lookup'}
+            {viewingDoc ? viewingDoc.description : view ? viewTitle[view] : selected ? 'Patient Options' : 'Patient File Lookup'}
           </h1>
-          <p className="text-sm text-[#64748b]">{selected ? selected.name + ' — ' + selected.id : 'Search for a patient by name'}</p>
+          <p className="text-sm text-[#64748b]">{selected ? `${selected.patient_first_name} ${selected.patient_last_name}` + ' — ' + selected.id : 'Search for a patient by name'}</p>
         </div>
       </div>
 
@@ -74,8 +74,8 @@ export default function PatientFile() {
             <div className="mt-3 bg-white border border-[#e2e8f0] rounded-2xl overflow-hidden shadow-lg">
               {results.map(p => (
                 <button key={p.id} onClick={() => handleSelect(p)} className="w-full flex items-center gap-4 px-5 py-4 hover:bg-[#f0f9ff] transition-colors border-b last:border-0 border-[#f1f5f9] text-left">
-                  <div className="size-10 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white text-sm font-bold shrink-0">{p.name.split(' ').map(n => n[0]).join('')}</div>
-                  <div><p className="font-bold text-[#171c1f]">{p.name}</p><p className="text-xs text-[#64748b]">{p.id} • Age {p.age}</p></div>
+                  <div className="size-10 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white text-sm font-bold shrink-0">{p.patient_first_name[0] + p.patient_last_name[0]}</div>
+                  <div><p className="font-bold text-[#171c1f]">{p.patient_first_name} {p.patient_last_name}</p><p className="text-xs text-[#64748b]">{p.id} • DOB {p.patient_date_of_birth}</p></div>
                   <ChevronRight className="size-4 text-[#94a3b8] ml-auto" />
                 </button>
               ))}
@@ -125,19 +125,20 @@ export default function PatientFile() {
           </div>
           <div className="bg-white rounded-2xl border border-[#e2e8f0] p-6 space-y-5">
             <div className="flex items-center gap-4 pb-4 border-b border-[#f1f5f9]">
-              <div className="size-14 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white text-lg font-bold">{selected.name.split(' ').map(n => n[0]).join('')}</div>
-              <div><p className="font-bold text-lg text-[#171c1f]">{selected.name}</p><p className="text-sm text-[#64748b]">{selected.id} • Age {selected.age}</p></div>
+              <div className="size-14 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white text-lg font-bold">{selected.patient_first_name[0] + selected.patient_last_name[0]}</div>
+              <div><p className="font-bold text-lg text-[#171c1f]">{selected.patient_first_name} {selected.patient_last_name}</p><p className="text-sm text-[#64748b]">{selected.id} • DOB {selected.patient_date_of_birth}</p></div>
             </div>
             {[
-              { label: 'Blood Type', key: 'blood' },
-              { label: 'Primary Diagnosis', key: 'diagnosis' },
+              { label: 'Height (cm)', key: 'height' },
+              { label: 'Weight (kg)', key: 'weight' },
+              { label: 'Blood Type', key: 'blood_type' },
+              { label: 'Chronic Condition', key: 'chronic_condition' },
               { label: 'Known Allergies', key: 'allergies' },
-              { label: 'Current Medications', key: 'meds' },
             ].map(field => (
               <div key={field.key}>
                 <label className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">{field.label}</label>
                 {editing ? (
-                  <input value={editData[field.key]} onChange={e => setEditData({ ...editData, [field.key]: e.target.value })} className="mt-1 w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0ea5e9]" />
+                  <input value={editData[field.key] || ''} onChange={e => setEditData({ ...editData, [field.key]: e.target.value })} className="mt-1 w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0ea5e9]" />
                 ) : (
                   <p className="mt-1 text-sm font-semibold text-[#171c1f]">{selected[field.key]}</p>
                 )}
@@ -171,9 +172,9 @@ export default function PatientFile() {
             </div>
             {selected.vaccinations.map((v, i) => (
               <div key={i} className="px-6 py-4 border-b last:border-0 border-[#f1f5f9] grid grid-cols-3 items-center">
-                <span className="text-sm font-semibold text-[#171c1f]">{v.name}</span>
-                <span className="text-sm text-[#64748b]">{v.date}</span>
-                <span className={`text-xs font-bold px-2.5 py-1 rounded-full w-fit ${v.status === 'Complete' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{v.status}</span>
+                <span className="text-sm font-semibold text-[#171c1f]">{v.vaccine_name}</span>
+                <span className="text-sm text-[#64748b]">{v.date_administered}</span>
+                <span className={`text-xs font-bold px-2.5 py-1 rounded-full w-fit ${v.status === 'administered' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{v.status}</span>
               </div>
             ))}
           </div>
@@ -192,13 +193,13 @@ export default function PatientFile() {
             {selected.documents.map((doc, i) => (
               <div key={i} className="px-6 py-4 border-b last:border-0 border-[#f1f5f9] grid grid-cols-3 items-center">
                 <div>
-                  <span className="text-sm font-semibold text-[#171c1f]">{doc.name}</span>
-                  <p className="text-[10px] text-[#94a3b8]">{doc.type}</p>
+                  <span className="text-sm font-semibold text-[#171c1f]">{doc.description}</span>
+                  <p className="text-[10px] text-[#94a3b8]">{doc.document_type}</p>
                 </div>
-                <span className="text-sm text-[#64748b]">{doc.date}</span>
+                <span className="text-sm text-[#64748b]">{doc.uploaded_at}</span>
                 <div className="flex gap-2">
                   <button onClick={() => { setViewingDoc(doc); setEditingDoc(false); setDocSaved(false); }} className="flex items-center gap-1 px-3 py-1.5 bg-[#e0f2fe] text-[#0369a1] rounded-lg text-xs font-bold hover:bg-[#bae6fd] transition-colors"><Eye className="size-3" /> View</button>
-                  <button onClick={() => { setViewingDoc(doc); setEditingDoc(true); setDocEditData({ name: doc.name, type: doc.type, date: doc.date }); setDocSaved(false); }} className="flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-bold hover:bg-amber-200 transition-colors"><Pencil className="size-3" /> Modify</button>
+                  <button onClick={() => { setViewingDoc(doc); setEditingDoc(true); setDocEditData({ description: doc.description, document_type: doc.document_type, uploaded_at: doc.uploaded_at }); setDocSaved(false); }} className="flex items-center gap-1 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-bold hover:bg-amber-200 transition-colors"><Pencil className="size-3" /> Modify</button>
                 </div>
               </div>
             ))}
@@ -212,7 +213,7 @@ export default function PatientFile() {
           <div className="flex gap-3">
             {!editingDoc ? (
               <>
-                <button onClick={() => { setEditingDoc(true); setDocEditData({ name: viewingDoc.name, type: viewingDoc.type, date: viewingDoc.date }); setDocSaved(false); }} className="flex items-center gap-2 px-5 py-2.5 bg-amber-100 text-amber-700 rounded-xl font-semibold text-sm hover:bg-amber-200 transition-colors"><Pencil className="size-4" /> Modify</button>
+                <button onClick={() => { setEditingDoc(true); setDocEditData({ description: viewingDoc.description, document_type: viewingDoc.document_type, uploaded_at: viewingDoc.uploaded_at }); setDocSaved(false); }} className="flex items-center gap-2 px-5 py-2.5 bg-amber-100 text-amber-700 rounded-xl font-semibold text-sm hover:bg-amber-200 transition-colors"><Pencil className="size-4" /> Modify</button>
                 <button className="flex items-center gap-2 px-5 py-2.5 bg-[#e0f2fe] text-[#0369a1] rounded-xl font-semibold text-sm"><Eye className="size-4" /> Viewing</button>
               </>
             ) : (
@@ -221,14 +222,14 @@ export default function PatientFile() {
           </div>
           <div className="bg-white rounded-2xl border border-[#e2e8f0] p-6 space-y-5">
             {[
-              { label: 'Document Name', key: 'name' },
-              { label: 'Document Type', key: 'type' },
-              { label: 'Date', key: 'date' },
+              { label: 'Description', key: 'description' },
+              { label: 'Document Type', key: 'document_type' },
+              { label: 'Uploaded At', key: 'uploaded_at' },
             ].map(field => (
               <div key={field.key}>
                 <label className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">{field.label}</label>
                 {editingDoc ? (
-                  <input value={docEditData[field.key]} onChange={e => setDocEditData({ ...docEditData, [field.key]: e.target.value })} className="mt-1 w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0ea5e9]" />
+                  <input value={docEditData[field.key] || ''} onChange={e => setDocEditData({ ...docEditData, [field.key]: e.target.value })} className="mt-1 w-full bg-[#f8fafc] border border-[#e2e8f0] rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0ea5e9]" />
                 ) : (
                   <p className="mt-1 text-sm font-semibold text-[#171c1f]">{viewingDoc[field.key]}</p>
                 )}
@@ -237,9 +238,9 @@ export default function PatientFile() {
             <div>
               <label className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Content</label>
               <div className="mt-1 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-4 text-sm text-[#475569] min-h-[120px]">
-                <p>Document content for <strong>{viewingDoc.name}</strong> — {viewingDoc.type}</p>
-                <p className="mt-2 text-[#94a3b8]">Patient: {selected.name} ({selected.id})</p>
-                <p className="text-[#94a3b8]">Date: {viewingDoc.date}</p>
+                <p>Document content for <strong>{viewingDoc.description}</strong> — {viewingDoc.document_type}</p>
+                <p className="mt-2 text-[#94a3b8]">Patient: {selected.patient_first_name} {selected.patient_last_name} ({selected.id})</p>
+                <p className="text-[#94a3b8]">Date: {viewingDoc.uploaded_at}</p>
               </div>
             </div>
             {editingDoc && (
@@ -265,7 +266,7 @@ export default function PatientFile() {
           <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-slate-200">
             <div className="size-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"><Trash2 className="size-8 text-red-600" /></div>
             <h3 className="text-xl font-bold text-slate-900 text-center mb-2">Delete Patient?</h3>
-            <p className="text-slate-500 text-center text-sm mb-6">This will permanently remove <strong>{selected.name}</strong> from the directory.</p>
+            <p className="text-slate-500 text-center text-sm mb-6">This will permanently remove <strong>{selected.patient_first_name} {selected.patient_last_name}</strong> from the directory.</p>
             <div className="flex gap-3">
               <button onClick={() => setShowDelete(false)} className="flex-1 py-3 rounded-xl font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors">Cancel</button>
               <button onClick={handleDelete} className="flex-1 py-3 rounded-xl font-bold text-white bg-red-600 hover:bg-red-700 transition-colors">Yes, Delete</button>

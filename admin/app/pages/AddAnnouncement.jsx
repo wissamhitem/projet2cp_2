@@ -90,17 +90,17 @@ export default function AddAnnouncement() {
             <div className="grid grid-cols-3 gap-3">
               <button type="button" onClick={() => setTargetAudience('all')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'all' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Globe className="size-5" />
-                <span className="text-[10px] font-bold">Public</span>
+                <span className="text-[10px] font-bold">All</span>
               </button>
 
               <button type="button" onClick={() => setTargetAudience('guardian')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'guardian' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Users className="size-5" />
-                <span className="text-[10px] font-bold">Patients</span>
+                <span className="text-[10px] font-bold">Guardians</span>
               </button>
 
               <button type="button" onClick={() => setTargetAudience('doctor')} className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors ${targetAudience === 'doctor' ? 'border-[#006591] bg-[#006591]/5 text-[#006591]' : 'border-[#e2e8f0] text-[#64748b] hover:border-[#006591] hover:text-[#006591]'}`}>
                 <Lock className="size-5" />
-                <span className="text-[10px] font-bold">Staff Only</span>
+                <span className="text-[10px] font-bold">Doctors</span>
               </button>
             </div>
           </div>

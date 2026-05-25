@@ -1,38 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { UserPlus, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router';
-import api from '../../../src/services/api';
 
 export default function AddDoctor() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [services, setServices] = useState([]);
-  useEffect(() => {
-  api.services.list().then(data => setServices(data));
-  }, []);
-  const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    await api.doctors.create({
-      first_name: e.target[0].value,
-      last_name: e.target[1].value,
-      email: e.target[2].value,
-      password: e.target[3].value,
-      grade: e.target[4].value,
-      service: e.target[5].value,
-    });
-    setSuccess(true);
-    setTimeout(() => navigate('/admin'), 1500);
-  } catch (error) {
-    alert("Erreur : " + error.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+      setTimeout(() => navigate('/admin'), 1500);
+    }, 1200);
+  };
 
   if (success) {
     return (
@@ -83,41 +66,47 @@ export default function AddDoctor() {
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-6 gap-y-6">
-          <div className="field-animate col-span-2 sm:col-span-1 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.15s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">First Name</label>
-            <input required type="text" placeholder="John" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
+            <input required type="text" placeholder="e.g. John" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
           </div>
 
-          <div className="field-animate col-span-2 sm:col-span-1 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.18s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Last Name</label>
-            <input required type="text" placeholder="Doe" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
+            <input required type="text" placeholder="e.g. Doe" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
           </div>
 
-          <div className="field-animate col-span-2 sm:col-span-1 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.2s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Email Address</label>
             <input required type="email" placeholder="john.doe@arcio.health" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
           </div>
 
-          <div className="field-animate col-span-2 sm:col-span-1 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.22s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Password</label>
-            <input required type="password" placeholder="Min 8 characters" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
+            <input required type="password" placeholder="Minimum 8 characters" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
           </div>
 
-          <div className="field-animate col-span-2 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.25s' }}>
+            <label className="text-sm font-bold text-[#1e293b] ml-1">Phone</label>
+            <input required type="tel" placeholder="+212 600 000 000" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
+          </div>
+
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.28s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Grade</label>
-            <input required type="text" placeholder="e.g. Neurologist" className="w-full px-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
+            <input required type="text" placeholder="e.g. Specialist, Resident, Professor" className="w-full pl-5 pr-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm" />
           </div>
 
-          <div className="field-animate col-span-2 space-y-2">
+          <div className="field-animate col-span-2 sm:col-span-1 space-y-2" style={{ animationDelay: '0.3s' }}>
             <label className="text-sm font-bold text-[#1e293b] ml-1">Service</label>
-            <select className="w-full px-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm">
-              {services.map(s => (
-              <option key={s.id} value={s.id}>{s.name}</option>
-              ))}
+            <select className="w-full px-5 py-3.5 bg-white/50 border border-[#e2e8f0] rounded-2xl outline-none focus:ring-4 focus:ring-[#006591]/10 focus:border-[#006591] transition-all text-sm appearance-none">
+              <option>Select Service</option>
+              <option>Cardiology</option>
+              <option>Pediatrics</option>
+              <option>Neurology</option>
             </select>
           </div>
 
-          <div className="field-animate col-span-2 pt-4" style={{ animationDelay: '0.4s' }}>
+          <div className="field-animate col-span-2 pt-4" style={{ animationDelay: '0.35s' }}>
             <button 
               type="submit"
               disabled={loading}

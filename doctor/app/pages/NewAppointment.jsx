@@ -73,7 +73,7 @@ export default function NewAppointment() {
 
               {/* Step Indicators */}
               <div className="field-animate flex items-center gap-3 mb-8" style={{ animationDelay: '0.12s' }}>
-                {[1, 2, 3].map((s) => (
+                {[1, 2].map((s) => (
                   <button
                     key={s}
                     type="button"
@@ -87,60 +87,49 @@ export default function NewAppointment() {
                     }`}
                   >
                     {step > s ? <Check className="size-3.5" /> : <span>{s}</span>}
-                    <span className="hidden sm:inline">{s === 1 ? 'Patient' : s === 2 ? 'Service' : 'Schedule'}</span>
+                    <span className="hidden sm:inline">{s === 1 ? 'Patient & Service' : 'Schedule'}</span>
                   </button>
                 ))}
               </div>
-
+ 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {step === 1 && (
                   <>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>Patient Name</label>
-                        <input required type="text" placeholder="Full name" className={inputClass} />
+                        <label className={labelClass}>Patient ID</label>
+                        <input type="text" placeholder="Enter patient ID (optional)" className={inputClass} />
+                      </div>
+                    </div>
+                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.18s' }}>
+                      <div className="space-y-2">
+                        <label className={labelClass}>Guest First Name</label>
+                        <input type="text" placeholder="Guest first name" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Patient ID</label>
-                        <input type="text" placeholder="P-2024-XXX" className={inputClass} />
+                        <label className={labelClass}>Guest Last Name</label>
+                        <input type="text" placeholder="Guest last name" className={inputClass} />
                       </div>
                     </div>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.2s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>Phone Number</label>
+                        <label className={labelClass}>Guest Phone</label>
                         <input type="tel" placeholder="+212 600 000 000" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Email</label>
-                        <input type="email" placeholder="patient@email.com" className={inputClass} />
-                      </div>
-                    </div>
-                    <div className="field-animate pt-2" style={{ animationDelay: '0.25s' }}>
-                      <button type="button" onClick={() => setStep(2)}
-                        className="w-full bg-gradient-to-r from-[#006591] to-[#0ea5e9] text-white font-bold py-5 rounded-2xl shadow-lg shadow-[#006591]/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                        Continue to Service Selection →
-                      </button>
-                    </div>
-                  </>
-                )}
-
-                {step === 2 && (
-                  <>
-                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
-                      <div className="space-y-2">
-                        <label className={labelClass}>Consultation Type</label>
-                        <select required className={inputClass}>
-                          <option value="">Select type...</option>
-                          <option>General Consultation</option>
-                          <option>Follow-up Visit</option>
-                          <option>Lab Review</option>
-                          <option>Post-op Checkup</option>
-                          <option>Emergency Triage</option>
-                          <option>Prescription Renewal</option>
+                        <label className={labelClass}>Service</label>
+                        <select className={inputClass}>
+                          <option value="">Select service...</option>
+                          <option>Cardiology</option>
+                          <option>Pediatrics</option>
+                          <option>Neurology</option>
+                          <option>General Medicine</option>
                         </select>
                       </div>
+                    </div>
+                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.25s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>Preferred Doctor</label>
+                        <label className={labelClass}>Doctor</label>
                         <select className={inputClass}>
                           <option value="">Any available</option>
                           <option>Dr. Arcio Rahman</option>
@@ -149,43 +138,16 @@ export default function NewAppointment() {
                         </select>
                       </div>
                     </div>
-                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.2s' }}>
-                      <div className="space-y-2">
-                        <label className={labelClass}>Priority</label>
-                        <select className={inputClass}>
-                          <option>Normal</option>
-                          <option>Urgent</option>
-                          <option>Follow-up</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className={labelClass}>Visit Mode</label>
-                        <select className={inputClass}>
-                          <option>In-Person</option>
-                          <option>Video Call</option>
-                          <option>Phone</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="field-animate space-y-2" style={{ animationDelay: '0.25s' }}>
-                      <label className={labelClass}>Reason for Visit</label>
-                      <textarea rows="3" placeholder="Brief description of symptoms or reason..."
-                        className={inputClass}></textarea>
-                    </div>
-                    <div className="field-animate flex gap-4 pt-2" style={{ animationDelay: '0.3s' }}>
-                      <button type="button" onClick={() => setStep(1)}
-                        className="flex-1 bg-white/50 border border-white/60 text-[#64748b] font-bold py-5 rounded-2xl hover:bg-white/80 transition-all">
-                        ← Back
-                      </button>
-                      <button type="button" onClick={() => setStep(3)}
-                        className="flex-1 bg-gradient-to-r from-[#006591] to-[#0ea5e9] text-white font-bold py-5 rounded-2xl shadow-lg shadow-[#006591]/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <div className="field-animate pt-2" style={{ animationDelay: '0.3s' }}>
+                      <button type="button" onClick={() => setStep(2)}
+                        className="w-full bg-gradient-to-r from-[#006591] to-[#0ea5e9] text-white font-bold py-5 rounded-2xl shadow-lg shadow-[#006591]/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
                         Continue to Schedule →
                       </button>
                     </div>
                   </>
                 )}
-
-                {step === 3 && (
+ 
+                {step === 2 && (
                   <>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
                       <div className="space-y-2">
@@ -193,42 +155,26 @@ export default function NewAppointment() {
                         <input required type="date" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Preferred Time</label>
+                        <label className={labelClass}>Appointment Time</label>
                         <select required className={inputClass}>
                           <option value="">Select time...</option>
-                          <option>08:00 AM</option>
-                          <option>09:00 AM</option>
-                          <option>10:00 AM</option>
-                          <option>11:00 AM</option>
-                          <option>01:00 PM</option>
-                          <option>02:00 PM</option>
-                          <option>03:00 PM</option>
-                          <option>04:00 PM</option>
+                          <option>09:00</option>
+                          <option>09:30</option>
+                          <option>10:00</option>
+                          <option>10:30</option>
+                          <option>11:00</option>
+                          <option>11:30</option>
+                          <option>14:00</option>
+                          <option>14:30</option>
+                          <option>15:00</option>
+                          <option>15:30</option>
+                          <option>16:00</option>
+                          <option>16:30</option>
                         </select>
                       </div>
                     </div>
-                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.2s' }}>
-                      <div className="space-y-2">
-                        <label className={labelClass}>Duration</label>
-                        <select className={inputClass}>
-                          <option>15 minutes</option>
-                          <option>30 minutes</option>
-                          <option>45 minutes</option>
-                          <option>60 minutes</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className={labelClass}>Room / Location</label>
-                        <input type="text" placeholder="Auto-assigned" className={inputClass} />
-                      </div>
-                    </div>
-                    <div className="field-animate space-y-2" style={{ animationDelay: '0.25s' }}>
-                      <label className={labelClass}>Additional Notes</label>
-                      <textarea rows="3" placeholder="Pre-visit instructions, required documents..."
-                        className={inputClass}></textarea>
-                    </div>
-                    <div className="field-animate flex gap-4 pt-2" style={{ animationDelay: '0.3s' }}>
-                      <button type="button" onClick={() => setStep(2)}
+                    <div className="field-animate flex gap-4 pt-4" style={{ animationDelay: '0.25s' }}>
+                      <button type="button" onClick={() => setStep(1)}
                         className="flex-1 bg-white/50 border border-white/60 text-[#64748b] font-bold py-5 rounded-2xl hover:bg-white/80 transition-all">
                         ← Back
                       </button>

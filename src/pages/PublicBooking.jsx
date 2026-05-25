@@ -9,15 +9,18 @@ import {
 import api from '../services/api';
 
 const timeSlots = [
-  '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', 
-  '11:00 AM', '11:30 AM', '02:00 PM', '02:30 PM',
-  '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+  '09:00', '09:30', '10:00', '10:30', 
+  '11:00', '11:30', '14:00', '14:30',
+  '15:00', '15:30', '16:00', '16:30',
 ];
 
 export default function PublicBooking() {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [step, setStep] = useState(1);
+  const [guestFirstName, setGuestFirstName] = useState('');
+  const [guestLastName, setGuestLastName] = useState('');
+  const [guestPhone, setGuestPhone] = useState('');
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
@@ -33,15 +36,17 @@ export default function PublicBooking() {
   }, []);
 
   const steps = [
-    { num: 1, label: 'Choose Service', icon: Stethoscope },
-    { num: 2, label: 'Select Doctor', icon: UserRound },
-    { num: 3, label: 'Date & Time', icon: CalendarDays },
+    { num: 1, label: 'Patient Details', icon: UserRound },
+    { num: 2, label: 'Choose Service', icon: Stethoscope },
+    { num: 3, label: 'Select Doctor', icon: UserRound },
+    { num: 4, label: 'Date & Time', icon: CalendarDays },
   ];
 
   const canProceed = () => {
-    if (step === 1) return selectedService !== null;
-    if (step === 2) return selectedDoctor !== null;
-    if (step === 3) return selectedDate && selectedTime;
+    if (step === 1) return guestFirstName.trim() !== '' && guestLastName.trim() !== '' && guestPhone.trim() !== '';
+    if (step === 2) return selectedService !== null;
+    if (step === 3) return selectedDoctor !== null;
+    if (step === 4) return selectedDate && selectedTime;
     return false;
   };
 
@@ -174,8 +179,48 @@ export default function PublicBooking() {
 
       {/* Step Content */}
       <div className="fade-up-d2 flex-1">
-        {/* STEP 1: Choose Service */}
+        {/* STEP 1: Patient Details */}
         {step === 1 && (
+          <div className="max-w-xl mx-auto">
+            <h2 className="text-xl font-bold text-[#0f172a] mb-1">Tell us about yourself</h2>
+            <p className="text-[#64748b] text-sm mb-6">Please provide your basic information for the appointment.</p>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-[#0f172a] mb-1.5">Guest First Name</label>
+                <input 
+                  type="text" 
+                  value={guestFirstName} 
+                  onChange={(e) => setGuestFirstName(e.target.value)} 
+                  className="w-full px-4 py-3 rounded-xl border border-[#cbd5e1] focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all outline-none" 
+                  placeholder="e.g. John" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#0f172a] mb-1.5">Guest Last Name</label>
+                <input 
+                  type="text" 
+                  value={guestLastName} 
+                  onChange={(e) => setGuestLastName(e.target.value)} 
+                  className="w-full px-4 py-3 rounded-xl border border-[#cbd5e1] focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all outline-none" 
+                  placeholder="e.g. Doe" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#0f172a] mb-1.5">Guest Phone</label>
+                <input 
+                  type="tel" 
+                  value={guestPhone} 
+                  onChange={(e) => setGuestPhone(e.target.value)} 
+                  className="w-full px-4 py-3 rounded-xl border border-[#cbd5e1] focus:border-[#0ea5e9] focus:ring-2 focus:ring-[#0ea5e9]/20 transition-all outline-none" 
+                  placeholder="e.g. +212 600 000 000" 
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 2: Choose Service */}
+        {step === 2 && (
           <div>
             <h2 className="text-xl font-bold text-[#0f172a] mb-1">What do you need help with?</h2>
             <p className="text-[#64748b] text-sm mb-6">Select a medical service for your appointment.</p>
@@ -210,8 +255,8 @@ export default function PublicBooking() {
           </div>
         )}
 
-        {/* STEP 2: Select Doctor */}
-        {step === 2 && (
+        {/* STEP 3: Select Doctor */}
+        {step === 3 && (
           <div>
             <h2 className="text-xl font-bold text-[#0f172a] mb-1">Choose your specialist</h2>
             <p className="text-[#64748b] text-sm mb-6">Select a doctor for your <span className="font-semibold text-[#0ea5e9]">{selectedService?.name}</span> appointment.</p>
@@ -257,8 +302,8 @@ export default function PublicBooking() {
           </div>
         )}
 
-        {/* STEP 3: Date & Time */}
-        {step === 3 && (
+        {/* STEP 4: Date & Time */}
+        {step === 4 && (
           <div>
             <h2 className="text-xl font-bold text-[#0f172a] mb-1">Pick a date and time</h2>
             <p className="text-[#64748b] text-sm mb-6">
@@ -331,12 +376,13 @@ export default function PublicBooking() {
           {step > 1 ? 'Previous Step' : 'Cancel'}
         </button>
 
-        {step < 3 ? (
+        {step < 4 ? (
           <button
             onClick={() => {
               if (!canProceed()) {
-                if (step === 1) showToast('Please select a service first', 'error');
-                if (step === 2) showToast('Please select a doctor first', 'error');
+                if (step === 1) showToast('Please fill out all details', 'error');
+                if (step === 2) showToast('Please select a service first', 'error');
+                if (step === 3) showToast('Please select a doctor first', 'error');
                 return;
               }
               setStep(step + 1);

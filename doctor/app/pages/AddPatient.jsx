@@ -97,11 +97,11 @@ export default function AddPatient() {
                   <>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>First Name</label>
+                        <label className={labelClass}>Patient First Name</label>
                         <input required type="text" placeholder="e.g. John" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Last Name</label>
+                        <label className={labelClass}>Patient Last Name</label>
                         <input required type="text" placeholder="e.g. Doe" className={inputClass} />
                       </div>
                     </div>
@@ -115,19 +115,27 @@ export default function AddPatient() {
                         <select className={inputClass}>
                           <option>Male</option>
                           <option>Female</option>
-                          <option>Other</option>
-                          <option>Prefer not to say</option>
                         </select>
                       </div>
                     </div>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.25s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>Phone Number</label>
+                        <label className={labelClass}>Guardian Phone</label>
                         <input type="tel" placeholder="+212 600 000 000" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Email Address</label>
-                        <input type="email" placeholder="patient@email.com" className={inputClass} />
+                        <label className={labelClass}>Guardian Email</label>
+                        <input type="email" placeholder="guardian@email.com" className={inputClass} />
+                      </div>
+                    </div>
+                    <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.28s' }}>
+                      <div className="space-y-2">
+                        <label className={labelClass}>Guardian First Name</label>
+                        <input required type="text" placeholder="e.g. Ahmed" className={inputClass} />
+                      </div>
+                      <div className="space-y-2">
+                        <label className={labelClass}>Guardian Last Name</label>
+                        <input required type="text" placeholder="e.g. Doe" className={inputClass} />
                       </div>
                     </div>
                     <div className="field-animate pt-2" style={{ animationDelay: '0.3s' }}>
@@ -138,32 +146,36 @@ export default function AddPatient() {
                     </div>
                   </>
                 )}
-
+ 
                 {step === 2 && (
                   <>
                     <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
                       <div className="space-y-2">
-                        <label className={labelClass}>Primary Condition / Diagnosis</label>
-                        <input type="text" placeholder="e.g. Type 2 Diabetes" className={inputClass} />
+                        <label className={labelClass}>Height (cm)</label>
+                        <input type="number" placeholder="e.g. 120" className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>Blood Type</label>
-                        <select className={inputClass}>
-                          <option>A+</option><option>A-</option>
-                          <option>B+</option><option>B-</option>
-                          <option>AB+</option><option>AB-</option>
-                          <option>O+</option><option>O-</option>
-                          <option>Unknown</option>
-                        </select>
+                        <label className={labelClass}>Weight (kg)</label>
+                        <input type="number" placeholder="e.g. 35" className={inputClass} />
                       </div>
                     </div>
                     <div className="field-animate space-y-2" style={{ animationDelay: '0.2s' }}>
+                      <label className={labelClass}>Blood Type</label>
+                      <select className={inputClass}>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option>
+                        <option>O+</option><option>O-</option>
+                        <option>Unknown</option>
+                      </select>
+                    </div>
+                    <div className="field-animate space-y-2" style={{ animationDelay: '0.22s' }}>
                       <label className={labelClass}>Known Allergies</label>
                       <textarea rows="2" placeholder="e.g. Penicillin, Peanuts..." className={inputClass}></textarea>
                     </div>
                     <div className="field-animate space-y-2" style={{ animationDelay: '0.25s' }}>
-                      <label className={labelClass}>Current Medications</label>
-                      <textarea rows="2" placeholder="List active prescriptions..." className={inputClass}></textarea>
+                      <label className={labelClass}>Chronic Condition</label>
+                      <textarea rows="2" placeholder="e.g. Asthma, Diabetes..." className={inputClass}></textarea>
                     </div>
                     <div className="field-animate flex gap-4 pt-2" style={{ animationDelay: '0.3s' }}>
                       <button type="button" onClick={() => setStep(1)}

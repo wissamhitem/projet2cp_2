@@ -76,56 +76,17 @@ export default function AddService() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.15s' }}>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#334155] ml-1">Service Name</label>
-                    <input 
-                      required
-                      type="text" 
-                      placeholder="e.g. Echo-Cardiography"
-                      className="w-full bg-white/50 border border-white/60 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-[#0ea5e9]/10 focus:border-[#0ea5e9] transition-all text-[#0f172a]"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#334155] ml-1">Department</label>
-                    <select className="w-full bg-white/50 border border-white/60 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-[#0ea5e9]/10 focus:border-[#0ea5e9] transition-all text-[#0f172a]">
-                      <option>Cardiology</option>
-                      <option>Neurology</option>
-                      <option>Pediatrics</option>
-                      <option>General Medicine</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="field-animate space-y-2" style={{ animationDelay: '0.2s' }}>
-                  <label className="text-sm font-bold text-[#334155] ml-1">Service Description</label>
-                  <textarea 
-                    rows="4"
-                    placeholder="Briefly describe the clinical service, procedures, and scope..."
+                <div className="field-animate space-y-2" style={{ animationDelay: '0.15s' }}>
+                  <label className="text-sm font-bold text-[#334155] ml-1">Service Name</label>
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="e.g. Cardiology, Pediatrics"
                     className="w-full bg-white/50 border border-white/60 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-[#0ea5e9]/10 focus:border-[#0ea5e9] transition-all text-[#0f172a]"
-                  ></textarea>
+                  />
                 </div>
 
-                <div className="field-animate grid grid-cols-1 md:grid-cols-2 gap-6" style={{ animationDelay: '0.25s' }}>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#334155] ml-1">Duration (minutes)</label>
-                    <input 
-                      type="number" 
-                      placeholder="30"
-                      className="w-full bg-white/50 border border-white/60 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-[#0ea5e9]/10 focus:border-[#0ea5e9] transition-all text-[#0f172a]"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-[#334155] ml-1">Availability</label>
-                    <select className="w-full bg-white/50 border border-white/60 rounded-2xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-[#0ea5e9]/10 focus:border-[#0ea5e9] transition-all text-[#0f172a]">
-                      <option>Available</option>
-                      <option>Limited</option>
-                      <option>By Referral Only</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="field-animate pt-2" style={{ animationDelay: '0.3s' }}>
+                <div className="field-animate pt-2" style={{ animationDelay: '0.2s' }}>
                   <button 
                     disabled={loading}
                     className="w-full bg-gradient-to-r from-[#006591] to-[#0ea5e9] text-white font-bold py-5 rounded-2xl shadow-lg shadow-[#006591]/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4"

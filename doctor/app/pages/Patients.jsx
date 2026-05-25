@@ -1,4 +1,4 @@
-import { Search, Filter, Users, AlertTriangle, Heart, Activity, ArrowLeft, ArrowRight, Shield, FileText } from 'lucide-react';
+import { Search, Filter, Users, ArrowLeft, ArrowRight, Shield, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 
@@ -6,26 +6,18 @@ export default function Patients() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('All');
 
-  const tabs = ['All', 'Critical', 'In-Review', 'Stable'];
+  const tabs = ['All', 'Male', 'Female'];
   
   const patients = [
-    { name: 'Leo Harris', id: 'P-2024-201', age: 67, room: '402', status: 'Critical', spo2: 89, hr: 112, diagnosis: 'Cardiac Arrhythmia', lastUpdate: '5 min ago' },
-    { name: 'Sarah Jenkins', id: 'P-2024-147', age: 34, room: '215', status: 'Stable', spo2: 98, hr: 72, diagnosis: 'Post-op Recovery', lastUpdate: '1 hr ago' },
-    { name: 'Robert Chen', id: 'P-2024-189', age: 51, room: '310', status: 'In-Review', spo2: 94, hr: 88, diagnosis: 'Pulmonary Embolism', lastUpdate: '30 min ago' },
-    { name: 'Emily Watson', id: 'P-2024-256', age: 28, room: '108', status: 'Stable', spo2: 99, hr: 68, diagnosis: 'Routine Monitoring', lastUpdate: '2 hr ago' },
-    { name: 'Marcus Lee', id: 'P-2024-298', age: 73, room: '501', status: 'Critical', spo2: 91, hr: 104, diagnosis: 'Respiratory Distress', lastUpdate: '2 min ago' },
-    { name: 'Alice Turner', id: 'P-2024-301', age: 45, room: '220', status: 'In-Review', spo2: 96, hr: 80, diagnosis: 'Lab Results Pending', lastUpdate: '45 min ago' },
+    { patient_first_name: 'Leo', patient_last_name: 'Harris', id: 1, patient_date_of_birth: '1957-03-15', gender: 'Male' },
+    { patient_first_name: 'Sarah', patient_last_name: 'Jenkins', id: 2, patient_date_of_birth: '1990-06-24', gender: 'Female' },
+    { patient_first_name: 'Robert', patient_last_name: 'Chen', id: 3, patient_date_of_birth: '1973-11-12', gender: 'Male' },
+    { patient_first_name: 'Emily', patient_last_name: 'Watson', id: 4, patient_date_of_birth: '1996-10-01', gender: 'Female' },
+    { patient_first_name: 'Marcus', patient_last_name: 'Lee', id: 5, patient_date_of_birth: '1951-09-18', gender: 'Male' },
+    { patient_first_name: 'Alice', patient_last_name: 'Turner', id: 6, patient_date_of_birth: '1979-10-05', gender: 'Female' },
   ];
 
-  const filtered = activeTab === 'All' ? patients : patients.filter(p => p.status === activeTab);
-
-  const statusColor = (s) => {
-    if (s === 'Critical') return 'bg-red-100 text-red-700 border-red-200';
-    if (s === 'In-Review') return 'bg-amber-100 text-amber-700 border-amber-200';
-    return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-  };
-
-  const spo2Color = (v) => v < 92 ? 'text-red-600' : v < 95 ? 'text-amber-600' : 'text-emerald-600';
+  const filtered = activeTab === 'All' ? patients : patients.filter(p => p.gender === activeTab);
 
   return (
     <div className="p-8 space-y-6">
@@ -57,9 +49,8 @@ export default function Patients() {
             <div className="space-y-3">
               {[
                 { label: 'Total Patients', value: patients.length, color: 'text-[#0369a1]' },
-                { label: 'Critical', value: patients.filter(p => p.status === 'Critical').length, color: 'text-red-600' },
-                { label: 'In Review', value: patients.filter(p => p.status === 'In-Review').length, color: 'text-amber-600' },
-                { label: 'Stable', value: patients.filter(p => p.status === 'Stable').length, color: 'text-emerald-600' },
+                { label: 'Male', value: patients.filter(p => p.gender === 'Male').length, color: 'text-blue-600' },
+                { label: 'Female', value: patients.filter(p => p.gender === 'Female').length, color: 'text-rose-600' },
               ].map((item, i) => (
                 <div key={i} className="flex items-center justify-between py-2 border-b last:border-0 border-[#f1f5f9]">
                   <span className="text-sm text-[#64748b]">{item.label}</span>
@@ -111,22 +102,15 @@ export default function Patients() {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="size-11 rounded-full bg-gradient-to-br from-[#006591] to-[#0ea5e9] flex items-center justify-center text-white text-sm font-bold shrink-0">
-                      {p.name.split(' ').map(n => n[0]).join('')}
+                      {p.patient_first_name[0] + p.patient_last_name[0]}
                     </div>
                     <div>
-                      <p className="font-bold text-[#171c1f] group-hover:text-[#0369a1] transition-colors">{p.name}</p>
-                      <p className="text-xs text-[#64748b]">{p.id} • Age {p.age}</p>
+                      <p className="font-bold text-[#171c1f] group-hover:text-[#0369a1] transition-colors">{p.patient_first_name} {p.patient_last_name}</p>
+                      <p className="text-xs text-[#64748b]">ID: {p.id} • DOB: {p.patient_date_of_birth}</p>
                     </div>
                   </div>
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${statusColor(p.status)}`}>{p.status}</span>
+                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${p.gender === 'Male' ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-rose-100 text-rose-700 border-rose-200'}`}>{p.gender}</span>
                 </div>
-                <p className="text-sm text-[#475569] mb-3">{p.diagnosis}</p>
-                <div className="flex items-center gap-4 text-xs">
-                  <span className="flex items-center gap-1"><Activity className={`size-3 ${spo2Color(p.spo2)}`} /><span className="font-bold">SpO2: {p.spo2}%</span></span>
-                  <span className="flex items-center gap-1"><Heart className="size-3 text-red-500" /><span className="font-bold">HR: {p.hr}</span></span>
-                  <span className="flex items-center gap-1"><FileText className="size-3 text-[#64748b]" /><span>Room {p.room}</span></span>
-                </div>
-                <p className="text-[10px] text-[#94a3b8] mt-2">Updated {p.lastUpdate}</p>
               </div>
             ))}
           </div>

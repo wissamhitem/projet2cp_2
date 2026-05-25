@@ -67,8 +67,7 @@ export default function Settings() {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-[#171c1f]">Dr. Arcio</h4>
-                    <p className="text-sm text-[#64748b]">Senior Physician — Internal Medicine</p>
-                    <p className="text-xs text-[#94a3b8] mt-1">License ID: MD-2024-04821</p>
+                    <p className="text-sm text-[#64748b]">Senior Physician — Cardiology</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -76,9 +75,9 @@ export default function Settings() {
                     { label: 'Full Name', value: 'Dr. Arcio Rahman' },
                     { label: 'Email', value: 'dr.arcio@hospital.org' },
                     { label: 'Phone', value: '+212 600 123 456' },
-                    { label: 'Department', value: 'Internal Medicine' },
-                    { label: 'License Number', value: 'MD-2024-04821' },
-                    { label: 'Specialization', value: 'Cardiology' },
+                    { label: 'Address', value: 'Casablanca, Morocco' },
+                    { label: 'Service', value: 'Cardiology' },
+                    { label: 'Grade', value: 'Specialist' },
                   ].map((field, i) => (
                     <div key={i}>
                       <label className="text-xs font-bold uppercase tracking-wider text-[#64748b] mb-1.5 block">{field.label}</label>
