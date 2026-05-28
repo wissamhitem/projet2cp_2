@@ -173,6 +173,4 @@ const api = {
     markAll:  ()           => post('/notifications/mark-all-read/'),
   },
 };
-
-
 export default api;

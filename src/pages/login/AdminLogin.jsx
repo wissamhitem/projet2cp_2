@@ -20,6 +20,8 @@ export default function AdminLogin() {
   try {
     const data = await api.auth.login({ email, password });
     localStorage.setItem('token', data.access);
+    localStorage.setItem('refresh', data.refresh);
+    localStorage.setItem('role', 'admin');
     navigate('/admin');
   } catch (error) {
     alert("Erreur : " + error.message);

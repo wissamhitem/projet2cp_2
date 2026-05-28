@@ -15,16 +15,19 @@ export default function PatientLogin() {
   const accentDark = '#004a6b';
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-        await api.auth.login({ email, password });
-        navigate('/patient');
-    } catch (error) {
-        alert("Erreur : " + error.message);
-    } finally {
-        setLoading(false);
-    }
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const data = await api.auth.login({ email, password });
+    localStorage.setItem('token', data.access);
+    localStorage.setItem('refresh', data.refresh);
+    localStorage.setItem('role', 'patient');
+    navigate('/patient');
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  } finally {
+    setLoading(false);
+  }
 };
 
   return (

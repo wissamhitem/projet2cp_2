@@ -18,7 +18,10 @@ export default function DoctorLogin() {
   e.preventDefault();
   setLoading(true);
   try {
-    await api.auth.login({ email, password });
+    const data = await api.auth.login({ email, password });
+    localStorage.setItem('token', data.access);
+    localStorage.setItem('refresh', data.refresh);
+    localStorage.setItem('role', 'doctor');
     navigate('/doctor');
   } catch (error) {
     alert("Erreur : " + error.message);
